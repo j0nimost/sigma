@@ -1,7 +1,7 @@
 language: csharp
 mono: none
+dotnet: 2.1.502
 solution: sigma.sln
-install:
-  - nuget restore sigma.sln
 script:
-  - msbuild /p:Configuration=Release sigma.sln
+  - dotnet restore
+  - dotnet test
