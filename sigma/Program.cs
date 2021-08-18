@@ -26,7 +26,8 @@ namespace sigma
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 
-                Console.WriteLine(lexer.ToString());
+                Console.WriteLine(lexer.ToString()); // only printing
+
                 Console.Write("\nSigma > ");
             }
         }

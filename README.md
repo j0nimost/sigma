@@ -6,8 +6,7 @@ Sigma >
 ```
 
 ### ⚠️UNDERCONSTRUCTION⚠️
-Still not sure what diretion to take this project. So expect a lot of\
-breaking changes 
+Still not sure what diretion to take this project. So expect a lot of breaking changes 
 
 ### Author
 John Nyingi

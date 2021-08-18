@@ -99,6 +99,26 @@ namespace sigma
                     tokens.Add(addToken);
                     Advance(); // Get Next CHAR
                 }
+                else if (curr_char == '(')
+                {
+                    Token lparenToken = new Token
+                    {
+                        TokenType = TokenType.LPAREN,
+                        TokenValue = null
+                    };
+                    tokens.Add(lparenToken);
+                    Advance(); // Get Next CHAR
+                }
+                else if (curr_char == ')')
+                {
+                    Token rparenToken = new Token
+                    {
+                        TokenType = TokenType.RPAREN,
+                        TokenValue = null
+                    };
+                    tokens.Add(rparenToken);
+                    Advance(); // Get Next CHAR
+                }
                 else
                 {
                     throw new Exception($"Character: {curr_char} is unknown");
