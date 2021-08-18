@@ -56,7 +56,7 @@ namespace sigma
                     }
                     else
                     {
-                        throw new Exception("Not a Number");
+                        throw new NotSupportedException("Not a Number");
                     }
                 }
                 else if(curr_char == '*')
@@ -121,7 +121,7 @@ namespace sigma
                 }
                 else
                 {
-                    throw new Exception($"Character: {curr_char} is unknown");
+                    throw new NotSupportedException($"Character: {curr_char} is unknown");
                 }
                 
             }
