@@ -14,10 +14,13 @@ namespace sigma
                 
                 string text = Console.ReadLine();
                 
-                lexer = new Lexer(text);
+                
                 try
                 {
+                    lexer = new Lexer(text);
                     List<Token> tokens = lexer.Generate_Tokens();
+                    Parser parser = new Parser(tokens);
+                    parser.expression();
                 }
                 catch (Exception ex)
                 {
@@ -26,7 +29,7 @@ namespace sigma
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 
-                Console.WriteLine(lexer.ToString()); // only printing
+                //Console.WriteLine(lexer.ToString()); // only printing
 
                 Console.Write("\nSigma > ");
             }
