@@ -49,14 +49,20 @@ namespace sigma
                     Advance();
                     ASTNumber right = term();
                     resultTree.Node = new ASTPlus(resultTree.Node, right);
-                    Console.Write(resultTree.Node.ToString() + "\n");
-                    Console.Write(resultTree.Node.Eval());
                     
+
+                }
+                else if(curr_token.TokenType == TokenType.MINUS)
+                {
+                    Advance();
+                    ASTNumber right = term();
+                    resultTree.Node = new ASTMinus(resultTree.Node, right);
                 }
 
                 Advance();
             }
-            return null;
+
+            return resultTree;
         }
 
         public ASTNumber term()
