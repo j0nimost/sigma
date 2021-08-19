@@ -18,27 +18,32 @@ namespace sigma
         }
     }
 
-    public class ASTNumber
+    public class ASTNumber: IASTNode
     {
-        public decimal LeafValue;
+        public decimal leafValue;
         public ASTNumber(decimal leafVal)
         {
-            LeafValue = leafVal;
+            this.leafValue = leafVal;
+        }
+
+        public override decimal Eval()
+        {
+            return leafValue;
         }
 
         public override string ToString()
         {
-            return "("+ LeafValue.ToString() + ")";
+            return "(" + this.leafValue.ToString() + ")";
         }
     }
 
 
     public class ASTPlus: IASTNode
     {
-        public ASTNumber LeftNode;
-        public ASTNumber RigthNode;
+        public dynamic LeftNode;
+        public dynamic RigthNode;
 
-        public ASTPlus(ASTNumber leftNode, ASTNumber rightNode)
+        public ASTPlus(dynamic leftNode, dynamic rightNode)
         {
             LeftNode = leftNode;
             RigthNode = rightNode;
@@ -51,7 +56,7 @@ namespace sigma
 
         public override decimal Eval()
         {
-            return LeftNode.LeafValue + RigthNode.LeafValue;
+            return LeftNode.Eval() + RigthNode.Eval();
         }
 
     }
