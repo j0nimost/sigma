@@ -18,7 +18,7 @@ namespace sigma.tests
             ASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(11, res);
         }
 
@@ -32,7 +32,7 @@ namespace sigma.tests
             ASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(80, res);
         }
 
@@ -46,7 +46,7 @@ namespace sigma.tests
             ASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(6, res);
         }
     }
