@@ -20,7 +20,7 @@ namespace sigma
                     lexer = new Lexer(text);
                     List<Token> tokens = lexer.Generate_Tokens();
                     Parser parser = new Parser(tokens);
-                    parser.expression();
+                    Console.Write(parser.expression().Eval());
                 }
                 catch (Exception ex)
                 {
