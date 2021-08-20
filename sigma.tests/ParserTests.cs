@@ -15,10 +15,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            ASTNode result = parser.expression();
+            AST result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(11, res);
         }
 
@@ -29,10 +29,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            ASTNode result = parser.expression();
+            AST result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(80, res);
         }
 
@@ -43,10 +43,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            ASTNode result = parser.expression();
+            AST result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Node.Eval();
+            decimal res = result.Eval();
             Assert.Equal(6, res);
         }
     }

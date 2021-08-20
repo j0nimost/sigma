@@ -12,7 +12,7 @@ namespace sigma
         private List<Token> tokens;
         private int next = -1;
         private Token curr_token = null;
-        private ASTNode resultTree = new ASTNode();
+        private AST resultTree = new AST();
         public Parser(List<Token> tokens)
         {
             this.tokens = tokens;
@@ -32,13 +32,13 @@ namespace sigma
             }
         }
 
-        public ASTNode factor()
+        public AST factor()
         {
             return null;
             
         }
 
-        public ASTNode expression()
+        public AST expression()
         {
             resultTree.Node = term();
             Advance();
