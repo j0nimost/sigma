@@ -8,7 +8,7 @@ namespace sigma
     {
         public abstract decimal Eval();
     }
-    public class ASTNode: IASTNode
+    public class AST: IASTNode
     {
         public dynamic Node { get; set; } // store any type of node
 
