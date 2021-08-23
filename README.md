@@ -6,6 +6,7 @@ An Interpreter written in C#. Currently it Supports
  - [x] Subtraction
  - [x] Multiplication
  - [x] Division
+ - [ ] Bracket Operations
  - [ ] Powers
  - [ ] Square Roots
  - [ ] Logarithms
