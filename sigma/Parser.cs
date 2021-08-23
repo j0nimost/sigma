@@ -71,6 +71,12 @@ namespace sigma
                     result.Node = new ASTMultiply(result.Node, right);
 
                 }
+                else if(curr_token.TokenType == TokenType.DIVIDE)
+                {
+                    Advance();
+                    ASTNumber right = factor();
+                    result.Node = new ASTDivide(result.Node, right);
+                }
             }
             return result;
         }

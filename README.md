@@ -1,5 +1,15 @@
 ## SIGMA
-An Interpreter written in C#. Currently doing basic Math
+An Interpreter written in C#. Currently it Supports
+
+* Math Operations (Associativity)
+ - [x] Addition
+ - [x] Subtraction
+ - [x] Multiplication
+ - [x] Division
+ - [ ] Bracket Operations
+ - [ ] Powers
+ - [ ] Square Roots
+ - [ ] Logarithms
 
 [![Build Status](https://travis-ci.com/j0nimost/sigma.svg?branch=main)](https://travis-ci.com/j0nimost/sigma)
 
