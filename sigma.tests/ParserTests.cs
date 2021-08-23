@@ -77,5 +77,47 @@ namespace sigma.tests
             decimal res = result.Eval();
             Assert.Equal(3, res);
         }
+
+        [Fact]
+        public void TestDivisionByZero()
+        {
+            
+            lexer = new Lexer("1/0");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            Assert.Throws<DivideByZeroException>(() => result.Eval());
+        }
+
+        [Fact]
+        public void TestDivision()
+        {
+            lexer = new Lexer("15/ 5");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(3, res);
+        }
+
+        [Fact]
+        public void TestCombinedOperations()
+        {
+            lexer = new Lexer("45/9-5+187*2-345+65/5-4*5+3-100/4");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(0, res);
+        }
     }
 }

@@ -155,7 +155,7 @@ namespace sigma
             {
                 number = '0' + number;
             }
-            else if(number[number.Length-1] == '0')
+            else if(number[number.Length-1] == '.')
             {
                 number += '0';
             }
