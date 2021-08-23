@@ -46,22 +46,22 @@ namespace sigma
     public class ASTPlus: IASTNode
     {
         public dynamic LeftNode;
-        public dynamic RigthNode;
+        public dynamic RightNode;
 
         public ASTPlus(dynamic leftNode, dynamic rightNode)
         {
             LeftNode = leftNode;
-            RigthNode = rightNode;
+            RightNode = rightNode;
         }
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " + " + RigthNode.ToString();
+            return LeftNode.ToString() + " + " + RightNode.ToString();
         }
 
         public override decimal Eval()
         {
-            return LeftNode.Eval() + RigthNode.Eval();
+            return LeftNode.Eval() + RightNode.Eval();
         }
 
     }
@@ -69,66 +69,66 @@ namespace sigma
     public class ASTMinus: IASTNode
     {
         public dynamic LeftNode;
-        public dynamic RigthNode;
+        public dynamic RightNode;
 
         public ASTMinus(dynamic leftNode, dynamic rightNode)
         {
             LeftNode = leftNode;
-            RigthNode = rightNode;
+            RightNode = rightNode;
         }
 
         public override string ToString()
         {
-            return LeftNode.ToString() + "- " + RigthNode.ToString();
+            return LeftNode.ToString() + "- " + RightNode.ToString();
         }
 
         public override decimal Eval()
         {
-            return LeftNode.Eval() - RigthNode.Eval();
+            return LeftNode.Eval() - RightNode.Eval();
         }
     }
 
     public class ASTMultiply : IASTNode
     {
         public dynamic LeftNode;
-        public dynamic RigthNode;
+        public dynamic RightNode;
 
         public ASTMultiply(dynamic leftNode, dynamic rightNode)
         {
             LeftNode = leftNode;
-            RigthNode = rightNode;
+            RightNode = rightNode;
         }
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " * " + RigthNode.ToString();
+            return LeftNode.ToString() + " * " + RightNode.ToString();
         }
 
         public override decimal Eval()
         {
-            return LeftNode.Eval() * RigthNode.Eval();
+            return LeftNode.Eval() * RightNode.Eval();
         }
     }
 
     public class ASTDivide : IASTNode
     {
         public dynamic LeftNode;
-        public dynamic RigthNode;
+        public dynamic RightNode;
 
         public ASTDivide(dynamic leftNode, dynamic rightNode)
         {
             LeftNode = leftNode;
-            RigthNode = rightNode;
+            RightNode = rightNode;
         }
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " / " + RigthNode.ToString();
+            return LeftNode.ToString() + " / " + RightNode.ToString();
         }
 
         public override decimal Eval()
         {
-            return LeftNode.Eval() / RigthNode.Eval();
+            return LeftNode.Eval() / RightNode.Eval();
         }
     }
 }
