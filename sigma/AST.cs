@@ -16,6 +16,11 @@ namespace sigma
         {
             return Node.Eval();
         }
+
+        public override string ToString()
+        {
+            return Node.ToString();
+        }
     }
 
     public class ASTNumber: IASTNode
