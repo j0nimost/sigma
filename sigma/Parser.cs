@@ -32,22 +32,16 @@ namespace sigma
             }
         }
 
-        public AST factor()
-        {
-            return null;
-            
-        }
-
+        
         public AST expression()
         {
-            resultTree.Node = term();
-            Advance();
-            while(curr_token != null && resultTree.Node != null)
+            resultTree = term();
+            while(curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
             {
                 if(curr_token.TokenType == TokenType.PLUS)
                 {
                     Advance();
-                    ASTNumber right = term();
+                    AST right = term();
                     resultTree.Node = new ASTPlus(resultTree.Node, right);
                     
 
@@ -55,25 +49,43 @@ namespace sigma
                 else if(curr_token.TokenType == TokenType.MINUS)
                 {
                     Advance();
-                    ASTNumber right = term();
+                    AST right = term();
                     resultTree.Node = new ASTMinus(resultTree.Node, right);
                 }
 
-                Advance();
             }
 
             return resultTree;
         }
 
-        public ASTNumber term()
+        public AST term()
         {
-            if(curr_token.TokenType ==  TokenType.NUMBER)
+            AST result = new AST();
+            result.Node = factor();
+            //
+            while (curr_token != null && DivMultiply.Contains(curr_token.TokenType))
             {
-                ASTNumber number = new ASTNumber(curr_token.TokenValue);
-                return number;
-            }
-            return null;
-        }
+                if (curr_token.TokenType == TokenType.MULTIPLY)
+                {
+                    Advance();
+                    ASTNumber right = factor();
+                    result.Node = new ASTMultiply(result.Node, right);
 
+                }
+            }
+            return result;
+        }
+        public ASTNumber factor()
+        {
+            ASTNumber number = null;
+            if(curr_token.TokenType == TokenType.NUMBER)
+            {
+                number = new ASTNumber(curr_token.TokenValue);
+            }
+
+            Advance();
+            return number;
+
+        }
     }
 }
