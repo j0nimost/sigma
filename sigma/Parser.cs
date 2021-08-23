@@ -42,15 +42,14 @@ namespace sigma
                 {
                     Advance();
                     AST right = term();
-                    resultTree.Node = new ASTPlus(resultTree.Node, right);
+                    resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
                     
-
                 }
                 else if(curr_token.TokenType == TokenType.MINUS)
                 {
                     Advance();
                     AST right = term();
-                    resultTree.Node = new ASTMinus(resultTree.Node, right);
+                    resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
                 }
 
             }
