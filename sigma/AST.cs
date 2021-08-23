@@ -109,4 +109,26 @@ namespace sigma
             return LeftNode.Eval() * RigthNode.Eval();
         }
     }
+
+    public class ASTDivide : IASTNode
+    {
+        public dynamic LeftNode;
+        public dynamic RigthNode;
+
+        public ASTDivide(dynamic leftNode, dynamic rightNode)
+        {
+            LeftNode = leftNode;
+            RigthNode = rightNode;
+        }
+
+        public override string ToString()
+        {
+            return LeftNode.ToString() + " / " + RigthNode.ToString();
+        }
+
+        public override decimal Eval()
+        {
+            return LeftNode.Eval() / RigthNode.Eval();
+        }
+    }
 }
