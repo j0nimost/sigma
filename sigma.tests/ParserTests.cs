@@ -49,5 +49,33 @@ namespace sigma.tests
             decimal res = result.Eval();
             Assert.Equal(6, res);
         }
+
+        [Fact]
+        public void TestMultiplication()
+        {
+            lexer = new Lexer("14 * 7");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(98, res);
+        }
+
+        [Fact]
+        public void TestMultiplicationWithPlusandMinus()
+        {
+            lexer = new Lexer("12 - 14 * 7 + 9 * 6 + 7 * 5");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(3, res);
+        }
     }
 }
