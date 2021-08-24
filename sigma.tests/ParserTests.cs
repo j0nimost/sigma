@@ -119,5 +119,33 @@ namespace sigma.tests
             decimal res = result.Eval();
             Assert.Equal(0, res);
         }
+
+        [Fact]
+        public void TestParenthesis()
+        {
+            lexer = new Lexer("(5-2)+7-25/5");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(5, res);
+        }
+
+        [Fact]
+        public void TestNestedParenthesis()
+        {
+            lexer = new Lexer("((6*4)-4)");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(20, res);
+        }
     }
 }
