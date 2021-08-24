@@ -38,7 +38,7 @@ namespace sigma
 
         public override string ToString()
         {
-            return "(" + this.leafValue.ToString() + ")";
+            return  this.leafValue.ToString();
         }
     }
 
@@ -56,7 +56,7 @@ namespace sigma
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " + " + RightNode.ToString();
+            return "(" +LeftNode.ToString() + " + " + RightNode.ToString() + ")";
         }
 
         public override decimal Eval()
@@ -79,7 +79,7 @@ namespace sigma
 
         public override string ToString()
         {
-            return LeftNode.ToString() + "- " + RightNode.ToString();
+            return "(" + LeftNode.ToString() + "- " + RightNode.ToString() + ")";
         }
 
         public override decimal Eval()
@@ -101,7 +101,7 @@ namespace sigma
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " * " + RightNode.ToString();
+            return "(" + LeftNode.ToString() + " * " + RightNode.ToString() + ")";
         }
 
         public override decimal Eval()
@@ -123,7 +123,7 @@ namespace sigma
 
         public override string ToString()
         {
-            return LeftNode.ToString() + " / " + RightNode.ToString();
+            return "(" + LeftNode.ToString() + " / " + RightNode.ToString() + ")";
         }
 
         public override decimal Eval()
