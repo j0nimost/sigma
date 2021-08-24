@@ -36,7 +36,7 @@ namespace sigma
         public AST expression()
         {
             resultTree = term();
-            while(curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
+            while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
             {
                 if(curr_token.TokenType == TokenType.PLUS)
                 {
@@ -60,7 +60,7 @@ namespace sigma
         public AST term()
         {
             AST result = new AST();
-            result.Node = factor();
+            result = factor();
             //
             while (curr_token != null && DivMultiply.Contains(curr_token.TokenType))
             {
