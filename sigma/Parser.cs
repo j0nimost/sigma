@@ -8,7 +8,7 @@ namespace sigma
     {
         // Resolve the Lexer to Nodes
         private List<TokenType> AddMinus = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
-        private List<TokenType> DivMultiply = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY };
+        private List<TokenType> DivMultiply = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY};
         private List<Token> tokens;
         private int next = -1;
         private Token curr_token = null;
@@ -67,29 +67,40 @@ namespace sigma
                 if (curr_token.TokenType == TokenType.MULTIPLY)
                 {
                     Advance();
-                    ASTNumber right = factor();
-                    result.Node = new ASTMultiply(result.Node, right);
+                    AST right = factor();
+                    result.Node = new ASTMultiply(result.Node, right.Node);
 
                 }
                 else if(curr_token.TokenType == TokenType.DIVIDE)
                 {
                     Advance();
-                    ASTNumber right = factor();
-                    result.Node = new ASTDivide(result.Node, right);
+                    AST right = factor();
+                    result.Node = new ASTDivide(result.Node, right.Node);
                 }
+                
             }
             return result;
         }
-        public ASTNumber factor()
+        public AST factor()
         {
-            ASTNumber number = null;
-            if(curr_token.TokenType == TokenType.NUMBER)
+            AST result = new AST();
+            if (curr_token.TokenType == TokenType.LPAREN)
             {
-                number = new ASTNumber(curr_token.TokenValue);
+                Advance();
+                result = expression();// recursion to get next input
+                
+                if (curr_token.TokenType != TokenType.RPAREN)
+                {
+                    throw new FormatException("Invalid Syntax missing )");
+                }
             }
 
+            if (curr_token.TokenType == TokenType.NUMBER)
+            {
+                result.Node = new ASTNumber(curr_token.TokenValue);                
+            }
             Advance();
-            return number;
+            return result;
 
         }
     }
