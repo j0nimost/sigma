@@ -13,7 +13,8 @@ namespace sigma
         PLUS,
         MINUS,
         RPAREN,
-        LPAREN
+        LPAREN,
+        IDENTIFIER
     }
     public class Token
     {
