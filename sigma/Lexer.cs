@@ -129,6 +129,16 @@ namespace sigma
                     {
                         tokens.Add(identifierToken);
                     }
+                }
+                else if(curr_char == '=')
+                {
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.EQ,
+                        TokenValue = null
+                    };
+
+                    tokens.Add(token);
                     Advance();
                 }
                 else
