@@ -147,5 +147,17 @@ namespace sigma.tests
             decimal res = result.Eval();
             Assert.Equal(20, res);
         }
+
+        [Fact]
+        public void TestExceptionIncompleteParenthesis()
+        {
+            // NullReferenceException
+            lexer = new Lexer("((6*4-4)");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+
+            Assert.Throws<NullReferenceException>(() => parser.expression());
+        }
     }
 }
