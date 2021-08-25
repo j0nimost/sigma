@@ -30,8 +30,8 @@ namespace sigma.tests
         [Fact]
         public void TestAllTypes()
         {
-            string l_exp = "IDENTIFIER:YASSS NUMBER:5656 MULTIPLY:* NUMBER:454 DIVIDE:/ NUMBER:3434 IDENTIFIER:tuyt ";
-            lexer = new Lexer("YASSS 5656 * 454 / 3434 tuyt");
+            string l_exp = "IDENTIFIER:YASSS NUMBER:5656 MULTIPLY:* NUMBER:454 DIVIDE:/ NUMBER:3434 IDENTIFIER:tuyt EQ: ";
+            lexer = new Lexer("YASSS 5656 * 454 / 3434 tuyt=");
             List<Token> tokens = lexer.Generate_Tokens();
             string l_str = lexer.ToString();
 
