@@ -23,7 +23,7 @@ namespace sigma.tests
         [Fact]
         public void TestExceptionThrown()
         {
-            lexer = new Lexer("R");
+            lexer = new Lexer("$");
             Assert.Throws<NotSupportedException>(() => lexer.Generate_Tokens());
         }
     }
