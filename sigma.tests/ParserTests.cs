@@ -159,5 +159,65 @@ namespace sigma.tests
 
             Assert.Throws<NullReferenceException>(() => parser.expression());
         }
+
+        [Fact]
+        public void TestVariableDeclarations()
+        {
+            lexer = new Lexer("p=(((8*7)/4)-6)");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(8, res);
+
+            // Test Variable Existence
+            AST variableAST = null;
+            Assert.True(Parser.LocalAssignment.TryGetValue("p", out variableAST));
+            Assert.NotNull(variableAST);
+            decimal variableEval = variableAST.Eval();
+            Assert.Equal(8, variableEval);
+
+        }
+
+        [Fact]
+        public void TestExceptionForDuplicateVariableDeclarations()
+        {
+            lexer = new Lexer("d=(((8*7)/4)-6)");
+            List<Token> tokens = null;
+            tokens =lexer.Generate_Tokens();
+            Parser parser = null;
+            parser =new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(8, res);
+
+            // Test Duplication
+            lexer = new Lexer("d=-6)");
+            tokens = lexer.Generate_Tokens();
+            parser = new Parser(tokens);
+
+            Assert.Throws<Exception>(() => parser.expression());
+
+        }
+
+        [Fact]
+        public void TestExceptionForInvalidVariableDeclaration()
+        {
+            lexer = new Lexer("x=");
+            List<Token> tokens = null;
+            tokens = lexer.Generate_Tokens();
+            Parser parser = null;
+            parser = new Parser(tokens);
+
+            Assert.Throws<InvalidOperationException>(() => parser.expression());
+
+        }
+
     }
 }

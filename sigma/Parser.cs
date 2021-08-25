@@ -9,6 +9,7 @@ namespace sigma
         // Resolve the Lexer to Nodes
         private List<TokenType> AddMinus = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
         private List<TokenType> DivMultiply = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY};
+        public static Dictionary<string, AST> LocalAssignment = new Dictionary<string, AST>();
         private List<Token> tokens;
         private int next = -1;
         private Token curr_token = null;
@@ -35,24 +36,57 @@ namespace sigma
         
         public AST expression()
         {
-            resultTree = term();
-            while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
+            if (curr_token.TokenType == TokenType.IDENTIFIER)
             {
-                if(curr_token.TokenType == TokenType.PLUS)
+                string variable = curr_token.TokenValue;
+                // validate EQ
+                Advance();
+                if (curr_token == null)
                 {
-                    Advance();
-                    AST right = term();
-                    resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
-                    
-                }
-                else if(curr_token.TokenType == TokenType.MINUS)
-                {
-                    Advance();
-                    AST right = term();
-                    resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
+                    throw new InvalidOperationException("Missing Assignment '=' After Identifier");
                 }
 
+                //Advance
+                Advance();
+                // Check for Expression
+                if (curr_token == null)
+                {
+                    throw new InvalidOperationException("Missing Assignment Type After '=");
+                }
+                //Recurse on Expression to get the expression
+                resultTree = expression();
+                // Store In Dictionary
+                try
+                {
+                    LocalAssignment.Add(variable, resultTree);
+                }
+                catch (Exception)
+                {
+                    throw new Exception($"Variable - {variable} Already declared");
+                }
+                // return
             }
+            else
+            {
+                resultTree = term(); // BUG
+                while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
+                {
+                    if (curr_token.TokenType == TokenType.PLUS)
+                    {
+                        Advance();
+                        AST right = term();
+                        resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
+
+                    }
+                    else if (curr_token.TokenType == TokenType.MINUS)
+                    {
+                        Advance();
+                        AST right = term();
+                        resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
+                    }
+                }
+            }
+            
 
             return resultTree;
         }

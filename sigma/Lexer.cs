@@ -8,6 +8,8 @@ namespace sigma
     {
         private List<char> WHITESPACE = new List<char> {' ', '\n', '\t' };
         private List<char> NUMBERS = new List<char> {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        private List<char> LETTERS = new List<char> {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+                                                     'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
         private List<Token> tokens = new List<Token>();
 
         private string input;
@@ -119,6 +121,26 @@ namespace sigma
                     tokens.Add(rparenToken);
                     Advance(); // Get Next CHAR
                 }
+                else if (LETTERS.Contains(curr_char))
+                {
+                    // Get the Character 
+                    Token identifierToken = Generate_Variable();
+                    if (!String.IsNullOrEmpty(identifierToken.TokenValue))
+                    {
+                        tokens.Add(identifierToken);
+                    }
+                }
+                else if(curr_char == '=')
+                {
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.EQ,
+                        TokenValue = null
+                    };
+
+                    tokens.Add(token);
+                    Advance();
+                }
                 else
                 {
                     throw new NotSupportedException($"Character: {curr_char} is unknown");
@@ -174,6 +196,24 @@ namespace sigma
                 TokenValue = Convert.ToDecimal(number)
             };
 
+        }
+
+        public Token Generate_Variable()
+        {
+            string variable_name = "";
+
+            while(curr_char != '\0' && !WHITESPACE.Contains(curr_char) && LETTERS.Contains(curr_char))
+            {
+                variable_name += curr_char;
+
+                Advance();
+            }
+
+            return new Token
+            {
+                TokenType = TokenType.IDENTIFIER,
+                TokenValue = variable_name
+            };
         }
 
         public override string ToString()
