@@ -1,7 +1,8 @@
 ## SIGMA
 An Interpreter written in C#. Currently it Supports
 
-[![Build Status](https://travis-ci.com/j0nimost/sigma.svg?branch=main)](https://travis-ci.com/j0nimost/sigma)
+[![Build Status](https://travis-ci.com/j0nimost/sigma.svg?branch=main)](https://app.travis-ci.com/j0nimost/sigma)
+
 
 * Math Operations (Associativity)
  - [x] Addition
