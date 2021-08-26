@@ -22,7 +22,7 @@ namespace sigma
                 AST assignment = null;
                 if(Parser.LocalAssignment.TryGetValue(text, out assignment))
                 {
-                    Console.Write(assignment.Eval());
+                    Console.Write(assignment.Node);
                     continue;
                 }
                 
