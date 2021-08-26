@@ -57,11 +57,16 @@ namespace sigma
                 // Store In Dictionary
                 try
                 {
-                    LocalAssignment.Add(variable, resultTree);
+                    bool isAdded =LocalAssignment.TryAdd(variable, new AST() { Node = resultTree.Eval()});
+
+                    if (!isAdded)
+                    {
+                        LocalAssignment[variable] = new AST() { Node = resultTree.Eval() }; // Update
+                    }
                 }
                 catch (Exception)
                 {
-                    throw new Exception($"Variable - {variable} Already declared");
+                    throw new Exception("Unexpected Error When Adding Variable");
                 }
                 // return
             }
@@ -149,7 +154,12 @@ namespace sigma
                 Advance();
                 result.Node = expression();// recursion to get next input
                 
-                if (curr_token.TokenType != TokenType.RPAREN)
+                if (curr_token == null)
+                {
+                    throw new FormatException("Invalid Syntax missing )");
+                }
+
+                if(curr_token.TokenType != TokenType.RPAREN)
                 {
                     throw new FormatException("Invalid Syntax missing )");
                 }

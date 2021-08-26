@@ -6,13 +6,13 @@ namespace sigma
 {
     public abstract class IASTNode
     {
-        public abstract decimal Eval();
+        public abstract dynamic Eval();
     }
     public class AST: IASTNode
     {
         public dynamic Node { get; set; } // store any type of node
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return Node.Eval();
         }
@@ -31,7 +31,7 @@ namespace sigma
             this.leafValue = leafVal;
         }
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return leafValue;
         }
@@ -59,7 +59,7 @@ namespace sigma
             return "(" +LeftNode.ToString() + " + " + RightNode.ToString() + ")";
         }
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return LeftNode.Eval() + RightNode.Eval();
         }
@@ -82,7 +82,7 @@ namespace sigma
             return "(" + LeftNode.ToString() + "- " + RightNode.ToString() + ")";
         }
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return LeftNode.Eval() - RightNode.Eval();
         }
@@ -104,7 +104,7 @@ namespace sigma
             return "(" + LeftNode.ToString() + " * " + RightNode.ToString() + ")";
         }
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return LeftNode.Eval() * RightNode.Eval();
         }
@@ -126,7 +126,7 @@ namespace sigma
             return "(" + LeftNode.ToString() + " / " + RightNode.ToString() + ")";
         }
 
-        public override decimal Eval()
+        public override dynamic Eval()
         {
             return LeftNode.Eval() / RightNode.Eval();
         }
