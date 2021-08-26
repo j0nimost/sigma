@@ -57,11 +57,16 @@ namespace sigma
                 // Store In Dictionary
                 try
                 {
-                    LocalAssignment.Add(variable, new AST() { Node = resultTree.Eval()});
+                    bool isAdded =LocalAssignment.TryAdd(variable, new AST() { Node = resultTree.Eval()});
+
+                    if (!isAdded)
+                    {
+                        LocalAssignment[variable] = new AST() { Node = resultTree.Eval() }; // Update
+                    }
                 }
                 catch (Exception)
                 {
-                    throw new Exception($"Variable - {variable} Already declared");
+                    throw new Exception("Unexpected Error When Adding Variable");
                 }
                 // return
             }
