@@ -149,7 +149,12 @@ namespace sigma
                 Advance();
                 result.Node = expression();// recursion to get next input
                 
-                if (curr_token.TokenType != TokenType.RPAREN)
+                if (curr_token == null)
+                {
+                    throw new FormatException("Invalid Syntax missing )");
+                }
+
+                if(curr_token.TokenType != TokenType.RPAREN)
                 {
                     throw new FormatException("Invalid Syntax missing )");
                 }
