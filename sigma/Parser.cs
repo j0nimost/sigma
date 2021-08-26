@@ -32,7 +32,6 @@ namespace sigma
                 curr_token = null;
             }
         }
-
         
         public AST expression()
         {
@@ -68,23 +67,50 @@ namespace sigma
             }
             else
             {
-                resultTree = term(); // BUG
-                while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
+                if(resultTree.Node == null)
                 {
-                    if (curr_token.TokenType == TokenType.PLUS)
+                    resultTree = term();
+                    while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
                     {
-                        Advance();
-                        AST right = term();
-                        resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
+                        if (curr_token.TokenType == TokenType.PLUS)
+                        {
+                            Advance();
+                            AST right = term();
+                            resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
 
-                    }
-                    else if (curr_token.TokenType == TokenType.MINUS)
-                    {
-                        Advance();
-                        AST right = term();
-                        resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
+                        }
+                        else if (curr_token.TokenType == TokenType.MINUS)
+                        {
+                            Advance();
+                            AST right = term();
+                            resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
+                        }
                     }
                 }
+                else
+                {
+                    // During Recursion avoid overwriting value of resulttree
+                    AST tempResult = term();
+                    while (curr_token != null && tempResult.Node != null && AddMinus.Contains(curr_token.TokenType))
+                    {
+                        if (curr_token.TokenType == TokenType.PLUS)
+                        {
+                            Advance();
+                            AST right = term();
+                            resultTree.Node = new ASTPlus(tempResult.Node, right.Node);
+
+                        }
+                        else if (curr_token.TokenType == TokenType.MINUS)
+                        {
+                            Advance();
+                            AST right = term();
+                            resultTree.Node = new ASTMinus(tempResult.Node, right.Node);
+                        }
+                    }
+
+                    return tempResult;
+                }
+                
             }
             
 
@@ -121,7 +147,7 @@ namespace sigma
             if (curr_token.TokenType == TokenType.LPAREN)
             {
                 Advance();
-                result = expression();// recursion to get next input
+                result.Node = expression();// recursion to get next input
                 
                 if (curr_token.TokenType != TokenType.RPAREN)
                 {

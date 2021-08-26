@@ -219,5 +219,18 @@ namespace sigma.tests
 
         }
 
+        [Fact]
+        public void TestAnomalousMathematicalExpressions()
+        {
+            lexer = new Lexer("10-5*(25/5)+15");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(0, res);
+        }
     }
 }
