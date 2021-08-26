@@ -157,7 +157,7 @@ namespace sigma.tests
             Parser parser = new Parser(tokens);
 
 
-            Assert.Throws<NullReferenceException>(() => parser.expression());
+            Assert.Throws<FormatException>(() => parser.expression());
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace sigma.tests
             AST variableAST = null;
             Assert.True(Parser.LocalAssignment.TryGetValue("p", out variableAST));
             Assert.NotNull(variableAST);
-            decimal variableEval = variableAST.Eval();
+            decimal variableEval = variableAST.Node;
             Assert.Equal(8, variableEval);
 
         }
@@ -231,6 +231,34 @@ namespace sigma.tests
             Assert.NotNull(result);
             decimal res = result.Eval();
             Assert.Equal(0, res);
+        }
+
+        [Fact]
+        public void TestOperationsOnVariables()
+        {
+            // First Variable
+            lexer = new Lexer("u=9-4");
+            List<Token> tokens = null;
+            tokens = lexer.Generate_Tokens();
+            Parser parser = null;
+            parser = new Parser(tokens);
+
+            AST result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res = result.Eval();
+            Assert.Equal(5, res);
+
+            // Second Variable
+            lexer = new Lexer("v=u*2");
+            tokens = lexer.Generate_Tokens();
+            parser = new Parser(tokens);
+
+            result = parser.expression();
+
+            Assert.NotNull(result);
+            decimal res_ = result.Eval();
+            Assert.Equal(10, res_);
         }
     }
 }
