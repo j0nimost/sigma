@@ -4,14 +4,21 @@ An Interpreter written in C#. Currently it Supports
 [![Build Status](https://travis-ci.com/j0nimost/sigma.svg?branch=main)](https://app.travis-ci.com/j0nimost/sigma)
 
 
-* Math Operations (Associativity)
+* Math Operations (Associativity Implemented)
  - [x] Addition
  - [x] Subtraction
  - [x] Multiplication
  - [x] Division
  - [x] Bracket Operations
+
+* Data Types
+ - [x] Floats, Ints & UInts(8-> 64)
+ - [ ] Strings
+ - [ ] Bools
+ - [ ] Char 
+
 * Variables
- - [ ] Local Variables
+ - [x] Local Variables
  - [ ] Global Variables
 * Loops
  - [ ] For Loops
