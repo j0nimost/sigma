@@ -147,6 +147,8 @@ namespace sigma
                 }
                 
             }
+
+            Generate_VariableTokenValues(tokens); // IF ANY
             return tokens;
         }
 
@@ -214,6 +216,57 @@ namespace sigma
                 TokenType = TokenType.IDENTIFIER,
                 TokenValue = variable_name
             };
+        }
+
+        public List<Token> Generate_VariableTokenValues(List<Token> tokens)
+        {
+
+            List<TokenType> tokenTypes = new List<TokenType>();
+
+            for (int j = 0; j < tokens.Count; j++)
+            {
+                tokenTypes.Add(tokens[j].TokenType); // Flatten the List
+            }
+
+            // Loop through tokens
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                if (tokens[i].TokenType == TokenType.EQ && i != 1)
+                {
+                    throw new InvalidOperationException("The Assignment '=' Is invalidly placed");
+                }
+
+                // Check if all Variables are declared
+                if (tokens[i].TokenValue is string)
+                {
+                    AST assignment = null;
+                    if (Parser.LocalAssignment.TryGetValue(tokens[i].TokenValue, out assignment))
+                    {
+                        if(tokenTypes.Contains(TokenType.EQ))
+                        {
+                            if(i > 1)
+                            {
+                                tokens[i] = new Token
+                                {
+                                    TokenType = TokenType.NUMBER,
+                                    TokenValue = assignment.Node
+                                };
+                            }
+                        }
+                        else
+                        {
+                            tokens[i] = new Token
+                            {
+                                TokenType = TokenType.NUMBER,
+                                TokenValue = assignment.Node
+                            };
+                        }
+                    }
+                }
+
+            }
+            // Pass to the Parser
+            return tokens;
         }
 
         public override string ToString()
