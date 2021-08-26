@@ -57,7 +57,7 @@ namespace sigma
                 // Store In Dictionary
                 try
                 {
-                    LocalAssignment.Add(variable, resultTree);
+                    LocalAssignment.Add(variable, new AST() { Node = resultTree.Eval()});
                 }
                 catch (Exception)
                 {
