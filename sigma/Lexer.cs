@@ -147,6 +147,8 @@ namespace sigma
                 }
                 
             }
+
+            Generate_VariableTokenValues(tokens); // IF ANY
             return tokens;
         }
 
@@ -214,6 +216,30 @@ namespace sigma
                 TokenType = TokenType.IDENTIFIER,
                 TokenValue = variable_name
             };
+        }
+
+        public List<Token> Generate_VariableTokenValues(List<Token> tokens)
+        {
+            // Loop through tokens
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                // Check if all Variables are declared
+                if (tokens[i].TokenValue is string)
+                {
+                    AST assignment = null;
+                    if (Parser.LocalAssignment.TryGetValue(tokens[i].TokenValue, out assignment))
+                    {
+                        tokens[i] = new Token
+                        {
+                            TokenType = TokenType.NUMBER,
+                            TokenValue = assignment.Node
+                        };
+                    }
+                }
+
+            }
+            // Pass to the Parser
+            return tokens;
         }
 
         public override string ToString()
