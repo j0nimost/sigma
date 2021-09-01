@@ -1,35 +1,49 @@
 ## SIGMA
-An Interpreter written in C#. Currently it Supports
+An Interpreter / REPL written in C#. Get the grammar definition [here](./Grammar.md) \
+
+```
+Sigma > 
+```
+
 
 [![Build Status](https://travis-ci.com/j0nimost/sigma.svg?branch=main)](https://app.travis-ci.com/j0nimost/sigma)
 
 
 * Math Operations (Associativity Implemented)
- - [x] Addition
- - [x] Subtraction
- - [x] Multiplication
- - [x] Division
- - [x] Bracket Operations
+     - [x] Addition
+     - [x] Subtraction
+     - [x] Multiplication
+     - [x] Division
+     - [x] Bracket Operations
 
 * Data Types
- - [x] Floats, Ints & UInts(8-> 64)
- - [ ] Strings
- - [ ] Bools
- - [ ] Char 
+     - [x] Floats, Ints & UInts(8-> 64)
+     - [ ] Strings
+     - [ ] Boolean
+     - [ ] Char
+     - [ ] Byte 
+     - [ ] Lists
+     - [ ] Maps
 
 * Variables
- - [x] Local Variables
- - [ ] Global Variables
-* Loops
- - [ ] For Loops
+    - [x] Local Variables
+    - [ ] Global Variables
+
+* Statements
+    - [ ] Print
+    - [ ] Return
+    - [ ] IF statements
+    - [ ] For Loops
 * Functions
- - [ ] Arrow Functions
-```
-Sigma > 
-```
+    - [ ] Functions
+    - [ ] Arrow Functions
+* Types
+    - [ ] Type Declaration
+
+
 
 ### ⚠️UNDERCONSTRUCTION⚠️
-Still not sure what diretion to take this project. So expect a lot of breaking changes 
+A lot of breaking changes
 
 ### Author
 John Nyingi
