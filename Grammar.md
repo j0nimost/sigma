@@ -9,32 +9,32 @@ The notation of sigma is as follows.
 ### Declarations
 There are 
 
-* #### Variable declarations \
+* #### Variable declarations 
  `(T)IDENTIFIER | [(T)CommaToken] :`
                 ` (T)EQToken (N)EXP | [(T)CommaToken]`
 
-* ####  Function declaration \
+* ####  Function declaration 
  `(T)func (T)IDENTIFIER ( OPTIONAL(T)IDENTIFIER ) :`
                 `(N)STATEMENT `
 
-* #### Type declaration \
+* #### Type declaration 
  `(T)type (T)IDENTIFIER {` \
     `(T)IDENTIFIER: (N)EXPRESSION  }`
 
 ### Statements
 
-- #### IF STATEMENT : \ 
+- #### IF STATEMENT : 
     `(T) if (N)EXPRESSION { (N)STATEMENT } ` \
     `| (T) elif  (N)EXPRESSION { (N)STATEMENT }  ` \
     `| (T) else { (N)STATEMENT }`
-- #### FOR STATEMENT : \
+- #### FOR STATEMENT : 
     `(T) for (T) IDENTIFIER (T)EQToken (N)Literal ; (N) EXPRESSION ; (T) EXPRESSION ` \
     `(T) for (T) IDENTIFIER (T)EQToken (N)Literal ; (T) RANGE (N) LIST | MAP ` \
     `(T) for (N) EXPRESSION `
-- #### PRINT STATEMENT : \
+- #### PRINT STATEMENT : 
     `(T) print (N) EXPRESSION`
 
-- #### RETURN STATEMENT : \
+- #### RETURN STATEMENT : 
     `(T) return (N) EXPRESSION`
 
 
