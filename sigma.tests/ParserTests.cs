@@ -15,10 +15,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(11, res);
         }
 
@@ -29,10 +29,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(80, res);
         }
 
@@ -43,10 +43,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(6, res);
         }
 
@@ -57,10 +57,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(98, res);
         }
 
@@ -71,10 +71,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(3, res);
         }
 
@@ -86,10 +86,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            Assert.Throws<DivideByZeroException>(() => result.Eval());
+            Assert.Throws<DivideByZeroException>(() => (decimal)result.Eval());
         }
 
         [Fact]
@@ -99,10 +99,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(3, res);
         }
 
@@ -113,10 +113,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(0, res);
         }
 
@@ -127,10 +127,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(5, res);
         }
 
@@ -141,10 +141,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(20, res);
         }
 
@@ -167,17 +167,17 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(8, res);
 
             // Test Variable Existence
-            AST variableAST = null;
+            object variableAST = null;
             Assert.True(Parser.LocalAssignment.TryGetValue("p", out variableAST));
             Assert.NotNull(variableAST);
-            decimal variableEval = variableAST.Node;
+            decimal variableEval = (decimal)variableAST;
             Assert.Equal(8, variableEval);
 
         }
@@ -202,10 +202,10 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(0, res);
         }
 
@@ -219,10 +219,10 @@ namespace sigma.tests
             Parser parser = null;
             parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(5, res);
 
             // Second Variable
@@ -233,7 +233,7 @@ namespace sigma.tests
             result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res_ = result.Eval();
+            decimal res_ = (decimal)result.Eval();
             Assert.Equal(10, res_);
         }
 
@@ -247,10 +247,10 @@ namespace sigma.tests
             Parser parser = null;
             parser = new Parser(tokens);
 
-            AST result = parser.expression();
+            IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = result.Eval();
+            decimal res = (decimal)result.Eval();
             Assert.Equal(5, res);
 
             // Second Variable
@@ -261,7 +261,7 @@ namespace sigma.tests
             result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res_ = result.Eval();
+            decimal res_ = (decimal)result.Eval();
             Assert.Equal(10, res_);
         }
     }

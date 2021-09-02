@@ -6,32 +6,18 @@ namespace sigma
 {
     public abstract class IASTNode
     {
-        public abstract dynamic Eval();
-    }
-    public class AST: IASTNode
-    {
-        public dynamic Node { get; set; } // store any type of node
-
-        public override dynamic Eval()
-        {
-            return Node.Eval();
-        }
-
-        public override string ToString()
-        {
-            return Node.ToString();
-        }
+        public abstract object Eval();
     }
 
     public class ASTNumber: IASTNode
     {
-        public decimal leafValue;
+        public readonly decimal leafValue;
         public ASTNumber(decimal leafVal)
         {
             this.leafValue = leafVal;
         }
 
-        public override dynamic Eval()
+        public override object Eval()
         {
             return leafValue;
         }
@@ -45,10 +31,10 @@ namespace sigma
 
     public class ASTPlus: IASTNode
     {
-        public dynamic LeftNode;
-        public dynamic RightNode;
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
 
-        public ASTPlus(dynamic leftNode, dynamic rightNode)
+        public ASTPlus(IASTNode leftNode, IASTNode rightNode)
         {
             LeftNode = leftNode;
             RightNode = rightNode;
@@ -59,19 +45,19 @@ namespace sigma
             return "(" +LeftNode.ToString() + " + " + RightNode.ToString() + ")";
         }
 
-        public override dynamic Eval()
+        public override object Eval()
         {
-            return LeftNode.Eval() + RightNode.Eval();
+            return (decimal)LeftNode.Eval() + (decimal)RightNode.Eval();
         }
 
     }
 
     public class ASTMinus: IASTNode
     {
-        public dynamic LeftNode;
-        public dynamic RightNode;
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
 
-        public ASTMinus(dynamic leftNode, dynamic rightNode)
+        public ASTMinus(IASTNode leftNode, IASTNode rightNode)
         {
             LeftNode = leftNode;
             RightNode = rightNode;
@@ -82,18 +68,18 @@ namespace sigma
             return "(" + LeftNode.ToString() + "- " + RightNode.ToString() + ")";
         }
 
-        public override dynamic Eval()
+        public override object Eval()
         {
-            return LeftNode.Eval() - RightNode.Eval();
+            return (decimal)LeftNode.Eval() - (decimal)RightNode.Eval();
         }
     }
 
     public class ASTMultiply : IASTNode
     {
-        public dynamic LeftNode;
-        public dynamic RightNode;
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
 
-        public ASTMultiply(dynamic leftNode, dynamic rightNode)
+        public ASTMultiply(IASTNode leftNode, IASTNode rightNode)
         {
             LeftNode = leftNode;
             RightNode = rightNode;
@@ -104,18 +90,18 @@ namespace sigma
             return "(" + LeftNode.ToString() + " * " + RightNode.ToString() + ")";
         }
 
-        public override dynamic Eval()
+        public override object Eval()
         {
-            return LeftNode.Eval() * RightNode.Eval();
+            return (decimal)LeftNode.Eval() * (decimal)RightNode.Eval();
         }
     }
 
     public class ASTDivide : IASTNode
     {
-        public dynamic LeftNode;
-        public dynamic RightNode;
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
 
-        public ASTDivide(dynamic leftNode, dynamic rightNode)
+        public ASTDivide(IASTNode leftNode, IASTNode rightNode)
         {
             LeftNode = leftNode;
             RightNode = rightNode;
@@ -126,9 +112,9 @@ namespace sigma
             return "(" + LeftNode.ToString() + " / " + RightNode.ToString() + ")";
         }
 
-        public override dynamic Eval()
+        public override object Eval()
         {
-            return LeftNode.Eval() / RightNode.Eval();
+            return (decimal)LeftNode.Eval() / (decimal)RightNode.Eval();
         }
     }
 }
