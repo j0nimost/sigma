@@ -9,11 +9,11 @@ namespace sigma
         // Resolve the Lexer to Nodes
         private List<TokenType> AddMinus = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
         private List<TokenType> DivMultiply = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY};
-        public static Dictionary<string, AST> LocalAssignment = new Dictionary<string, AST>();
+        public static Dictionary<string, object> LocalAssignment = new Dictionary<string, object>();
         private List<Token> tokens;
         private int next = -1;
         private Token curr_token = null;
-        private AST resultTree = new AST();
+        private IASTNode resultTree;//new AST();
         public Parser(List<Token> tokens)
         {
             this.tokens = tokens;
@@ -33,7 +33,7 @@ namespace sigma
             }
         }
         
-        public AST expression()
+        public IASTNode expression()
         {
             if (curr_token.TokenType == TokenType.IDENTIFIER)
             {
@@ -57,11 +57,11 @@ namespace sigma
                 // Store In Dictionary
                 try
                 {
-                    bool isAdded =LocalAssignment.TryAdd(variable, new AST() { Node = resultTree.Eval()});
+                    bool isAdded =LocalAssignment.TryAdd(variable, resultTree.Eval());
 
                     if (!isAdded)
                     {
-                        LocalAssignment[variable] = new AST() { Node = resultTree.Eval() }; // Update
+                        LocalAssignment[variable] = resultTree.Eval(); // Update
                     }
                 }
                 catch (Exception)
@@ -72,44 +72,44 @@ namespace sigma
             }
             else
             {
-                if(resultTree.Node == null)
+                if(resultTree == null)
                 {
                     resultTree = term();
-                    while (curr_token != null && resultTree.Node != null && AddMinus.Contains(curr_token.TokenType))
+                    while (curr_token != null && resultTree != null && AddMinus.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
                             Advance();
-                            AST right = term();
-                            resultTree.Node = new ASTPlus(resultTree.Node, right.Node);
+                            IASTNode right = term();
+                            resultTree = new ASTPlus(resultTree, right);
 
                         }
                         else if (curr_token.TokenType == TokenType.MINUS)
                         {
                             Advance();
-                            AST right = term();
-                            resultTree.Node = new ASTMinus(resultTree.Node, right.Node);
+                            IASTNode right = term();
+                            resultTree = new ASTMinus(resultTree, right);
                         }
                     }
                 }
                 else
                 {
                     // During Recursion avoid overwriting value of resulttree
-                    AST tempResult = term();
-                    while (curr_token != null && tempResult.Node != null && AddMinus.Contains(curr_token.TokenType))
+                    IASTNode tempResult = term();
+                    while (curr_token != null && tempResult != null && AddMinus.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
                             Advance();
-                            AST right = term();
-                            resultTree.Node = new ASTPlus(tempResult.Node, right.Node);
+                            IASTNode right = term();
+                            resultTree = new ASTPlus(tempResult, right);
 
                         }
                         else if (curr_token.TokenType == TokenType.MINUS)
                         {
                             Advance();
-                            AST right = term();
-                            resultTree.Node = new ASTMinus(tempResult.Node, right.Node);
+                            IASTNode right = term();
+                            resultTree = new ASTMinus(tempResult, right);
                         }
                     }
 
@@ -122,37 +122,36 @@ namespace sigma
             return resultTree;
         }
 
-        public AST term()
+        public IASTNode term()
         {
-            AST result = new AST();
-            result = factor();
+            IASTNode result = factor();
             //
             while (curr_token != null && DivMultiply.Contains(curr_token.TokenType))
             {
                 if (curr_token.TokenType == TokenType.MULTIPLY)
                 {
                     Advance();
-                    AST right = factor();
-                    result.Node = new ASTMultiply(result.Node, right.Node);
+                    IASTNode right = factor();
+                    result = new ASTMultiply(result, right);
 
                 }
                 else if(curr_token.TokenType == TokenType.DIVIDE)
                 {
                     Advance();
-                    AST right = factor();
-                    result.Node = new ASTDivide(result.Node, right.Node);
+                    IASTNode right = factor();
+                    result = new ASTDivide(result, right);
                 }
                 
             }
             return result;
         }
-        public AST factor()
+        public IASTNode factor()
         {
-            AST result = new AST();
+            IASTNode result = null;
             if (curr_token.TokenType == TokenType.LPAREN)
             {
                 Advance();
-                result.Node = expression();// recursion to get next input
+                result = expression();// recursion to get next input
                 
                 if (curr_token == null)
                 {
@@ -167,7 +166,7 @@ namespace sigma
 
             if (curr_token.TokenType == TokenType.NUMBER)
             {
-                result.Node = new ASTNumber(curr_token.TokenValue);                
+                result = new ASTNumber(curr_token.TokenValue);                
             }
             Advance();
             return result;
