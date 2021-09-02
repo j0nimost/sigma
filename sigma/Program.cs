@@ -21,7 +21,7 @@ namespace sigma
 
                     // 
                     Parser parser = new Parser(tokens);
-                    AST ast = parser.expression();
+                    IASTNode ast = parser.expression();
                     //Console.WriteLine(ast.ToString());
                     Console.Write(ast.Eval());
                 }

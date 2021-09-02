@@ -239,7 +239,7 @@ namespace sigma
                 // Check if all Variables are declared
                 if (tokens[i].TokenValue is string)
                 {
-                    AST assignment = null;
+                    object assignment = null;
                     if (Parser.LocalAssignment.TryGetValue(tokens[i].TokenValue, out assignment))
                     {
                         if(tokenTypes.Contains(TokenType.EQ))
@@ -249,7 +249,7 @@ namespace sigma
                                 tokens[i] = new Token
                                 {
                                     TokenType = TokenType.NUMBER,
-                                    TokenValue = assignment.Node
+                                    TokenValue = assignment
                                 };
                             }
                         }
@@ -258,7 +258,7 @@ namespace sigma
                             tokens[i] = new Token
                             {
                                 TokenType = TokenType.NUMBER,
-                                TokenValue = assignment.Node
+                                TokenValue = assignment
                             };
                         }
                     }
