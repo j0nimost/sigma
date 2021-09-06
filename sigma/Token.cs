@@ -8,6 +8,7 @@ namespace sigma
     public enum TokenType
     {
         NUMBER=0,
+        STRING,
         DIVIDE,
         MULTIPLY,
         PLUS,
