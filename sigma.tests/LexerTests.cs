@@ -39,5 +39,18 @@ namespace sigma.tests
             Assert.Equal(l_exp, l_str);
 
         }
+
+        [Fact]
+        public void TestStringTypes()
+        {
+            string str_exp = "IDENTIFIER:ye EQ: STRING:DONDA ";
+            lexer = new Lexer("ye = \"DONDA\"");
+            List<Token> tokens = lexer.Generate_Tokens();
+            string l_str = lexer.ToString();
+
+            Assert.NotEmpty(tokens);
+            Assert.Equal(str_exp, l_str);
+        }
+
     }
 }

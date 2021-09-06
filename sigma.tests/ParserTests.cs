@@ -242,10 +242,8 @@ namespace sigma.tests
         {
             // First Variable
             lexer = new Lexer("a=9-4");
-            List<Token> tokens = null;
-            tokens = lexer.Generate_Tokens();
-            Parser parser = null;
-            parser = new Parser(tokens);
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
 
             IASTNode result = parser.expression();
 
@@ -263,6 +261,48 @@ namespace sigma.tests
             Assert.NotNull(result);
             decimal res_ = (decimal)result.Eval();
             Assert.Equal(10, res_);
+        }
+
+        [Fact]
+        public void TestREPLStringDeclarations()
+        {
+            lexer = new Lexer("\"Donda\"");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal("Donda", result.Eval());
+        }
+
+        [Fact]
+        public void TestStringVariableDeclarations()
+        {
+            lexer = new Lexer("ye   = \"Donda\"");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Assert.NotEmpty(tokens);
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotNull(result);
+            Assert.Equal("Donda", result.Eval());
+
+            // Validate Variable value is maintained
+            lexer = new Lexer("ye");
+            tokens = lexer.Generate_Tokens();
+            Assert.NotEmpty(tokens);
+            parser = new Parser(tokens);
+
+            result = parser.expression();
+            Assert.Equal("Donda", result.Eval());
+        }
+
+        [Fact]
+        public void TestStringFormatExceptions()
+        {
+            lexer = new Lexer("drake   = \"CLB");
+            Assert.Throws<InvalidOperationException>(() => lexer.Generate_Tokens()); 
         }
     }
 }

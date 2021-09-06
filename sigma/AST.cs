@@ -28,6 +28,24 @@ namespace sigma
         }
     }
 
+    public class ASTString : IASTNode
+    {
+        public readonly string stringNode;
+        public ASTString(string stringNode)
+        {
+            this.stringNode = stringNode;
+        }
+        public override object Eval()
+        {
+            return this.stringNode;
+        }
+
+        public override string ToString()
+        {
+            return this.stringNode;
+        }
+    }
+
 
     public class ASTPlus: IASTNode
     {

@@ -48,6 +48,12 @@ namespace sigma
                 {
                     Advance();
                 }
+                else if(curr_char == '\"') // Start of a string
+                {
+                    Token strToken = Generate_String();
+                    tokens.Add(strToken);
+                    Advance();
+                }
                 else if(curr_char == '.' || NUMBERS.Contains(curr_char))
                 {
                     // Parse
@@ -202,11 +208,11 @@ namespace sigma
 
         public Token Generate_Variable()
         {
-            string variable_name = "";
+            StringBuilder sb = new StringBuilder();
 
-            while(curr_char != '\0' && !WHITESPACE.Contains(curr_char) && LETTERS.Contains(curr_char))
+            while (curr_char != '\0' && !WHITESPACE.Contains(curr_char) && LETTERS.Contains(curr_char))
             {
-                variable_name += curr_char;
+                sb.Append(curr_char);
 
                 Advance();
             }
@@ -214,7 +220,29 @@ namespace sigma
             return new Token
             {
                 TokenType = TokenType.IDENTIFIER,
-                TokenValue = variable_name
+                TokenValue = sb.ToString()
+            };
+        }
+
+        public Token Generate_String()
+        {
+            StringBuilder sb = new StringBuilder(); // A memory efficient way of building string
+            Advance(); 
+            while (((int)curr_char >= 1 && (int)curr_char <=255) && curr_char != '\"') // Skip the NULL byte and Ensure we are still within range of the Quotations Marks
+            {
+                sb.Append(curr_char);
+                Advance();
+            }
+
+            if (curr_char != '\"') // Validate there is a closing Quotation Mark
+            {
+                throw new InvalidOperationException("Invalid string format");
+            }
+
+            return new Token
+            {
+                TokenType = TokenType.STRING,
+                TokenValue = sb.ToString()
             };
         }
 
@@ -237,7 +265,7 @@ namespace sigma
                 }
 
                 // Check if all Variables are declared
-                if (tokens[i].TokenValue is string)
+                if (tokens[i].TokenType == TokenType.IDENTIFIER) // only work with Identifiers
                 {
                     object assignment = null;
                     if (Parser.LocalAssignment.TryGetValue(tokens[i].TokenValue, out assignment))
@@ -255,11 +283,22 @@ namespace sigma
                         }
                         else
                         {
-                            tokens[i] = new Token
+                            decimal val = 0;
+                            if(Decimal.TryParse(assignment.ToString(), out val))
                             {
-                                TokenType = TokenType.NUMBER,
-                                TokenValue = assignment
-                            };
+                                tokens[i] = new Token
+                                {
+                                    TokenType = TokenType.NUMBER,
+                                    TokenValue = val
+                                };
+                            }
+                            else {
+                                tokens[i] = new Token
+                                {
+                                    TokenType = TokenType.STRING,
+                                    TokenValue = assignment
+                                };
+                            }
                         }
                     }
                 }

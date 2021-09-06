@@ -168,6 +168,10 @@ namespace sigma
             {
                 result = new ASTNumber(curr_token.TokenValue);                
             }
+            else if (curr_token.TokenType == TokenType.STRING)
+            {
+                result = new ASTString(curr_token.TokenValue);
+            }
             Advance();
             return result;
 
