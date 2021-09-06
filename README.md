@@ -1,5 +1,5 @@
 ## SIGMA
-An Interpreter / REPL written in C#. Get the grammar definition [here](./Grammar.md) \
+An Interpreter / REPL written in C#. Get the grammar definition [here](./Grammar.md) 
 
 ```
 Sigma > 
@@ -18,7 +18,7 @@ Sigma >
 
 * Data Types
      - [x] Floats, Ints & UInts(8-> 64)
-     - [ ] Strings
+     - [x] Strings
      - [ ] Boolean
      - [ ] Char
      - [ ] Byte 
