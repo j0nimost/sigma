@@ -16,7 +16,8 @@ namespace sigma
         RPAREN,
         LPAREN,
         IDENTIFIER,
-        EQ
+        EQ,
+        EOF
     }
     public class Token
     {

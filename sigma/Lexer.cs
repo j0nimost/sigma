@@ -23,25 +23,23 @@ namespace sigma
 
         public void Advance()
         {
-            try
-            {
-                next++;
+            next++;
 
-                curr_char = input[next];
-                
-            }
-            catch (IndexOutOfRangeException)
+            if (next < input.Length)
             {
-                // DO NADA
+                curr_char = input[next];
+            }
+            else
+            {
                 curr_char = '\0';
             }
-            
+
         }
 
         public List<Token> Generate_Tokens()
         {
             
-            while(curr_char != '\0')
+            while(true)
             {
                 // check if space
                 if (WHITESPACE.Contains(curr_char))
@@ -147,12 +145,26 @@ namespace sigma
                     tokens.Add(token);
                     Advance();
                 }
+                else if(curr_char == '\0')
+                {
+                    // 
+                    Token eof = new Token
+                    {
+                        TokenType = TokenType.EOF,
+                        TokenValue = null
+                    };
+
+                    tokens.Add(eof);
+                    break;
+                }
                 else
                 {
                     throw new NotSupportedException($"Character: {curr_char} is unknown");
                 }
                 
             }
+
+            
 
             Generate_VariableTokenValues(tokens); // IF ANY
             return tokens;
