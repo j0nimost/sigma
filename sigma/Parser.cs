@@ -22,14 +22,10 @@ namespace sigma
 
         public void Advance()
         {
-            try
+            next++;
+            if (next < tokens.Count)
             {
-                next++;
                 curr_token = tokens[next];
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                curr_token = null;
             }
         }
         
@@ -40,7 +36,7 @@ namespace sigma
                 string variable = curr_token.TokenValue;
                 // validate EQ
                 Advance();
-                if (curr_token == null)
+                if (curr_token.TokenType == TokenType.EOF)
                 {
                     throw new InvalidOperationException("Missing Assignment '=' After Identifier");
                 }
@@ -48,7 +44,7 @@ namespace sigma
                 //Advance
                 Advance();
                 // Check for Expression
-                if (curr_token == null)
+                if (curr_token.TokenType == TokenType.EOF)
                 {
                     throw new InvalidOperationException("Missing Assignment Type After '=");
                 }
@@ -75,7 +71,7 @@ namespace sigma
                 if(resultTree == null)
                 {
                     resultTree = term();
-                    while (curr_token != null && resultTree != null && AddMinus.Contains(curr_token.TokenType))
+                    while (curr_token.TokenType != TokenType.EOF && resultTree != null && AddMinus.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
@@ -96,7 +92,7 @@ namespace sigma
                 {
                     // During Recursion avoid overwriting value of resulttree
                     IASTNode tempResult = term();
-                    while (curr_token != null && tempResult != null && AddMinus.Contains(curr_token.TokenType))
+                    while (curr_token.TokenType != TokenType.EOF && tempResult != null && AddMinus.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
@@ -126,7 +122,7 @@ namespace sigma
         {
             IASTNode result = factor();
             //
-            while (curr_token != null && DivMultiply.Contains(curr_token.TokenType))
+            while (curr_token.TokenType != TokenType.EOF && DivMultiply.Contains(curr_token.TokenType))
             {
                 if (curr_token.TokenType == TokenType.MULTIPLY)
                 {
@@ -153,7 +149,7 @@ namespace sigma
                 Advance();
                 result = expression();// recursion to get next input
                 
-                if (curr_token == null)
+                if (curr_token.TokenType == TokenType.EOF)
                 {
                     throw new FormatException("Invalid Syntax missing )");
                 }
