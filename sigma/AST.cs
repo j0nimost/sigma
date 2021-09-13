@@ -11,8 +11,8 @@ namespace sigma
 
     public class ASTNumber: IASTNode
     {
-        public readonly decimal leafValue;
-        public ASTNumber(decimal leafVal)
+        public readonly long leafValue;
+        public ASTNumber(long leafVal)
         {
             this.leafValue = leafVal;
         }
@@ -65,7 +65,7 @@ namespace sigma
 
         public override object Eval()
         {
-            return (decimal)LeftNode.Eval() + (decimal)RightNode.Eval();
+            return (long)LeftNode.Eval() + (long)RightNode.Eval();
         }
 
     }
@@ -88,7 +88,7 @@ namespace sigma
 
         public override object Eval()
         {
-            return (decimal)LeftNode.Eval() - (decimal)RightNode.Eval();
+            return (long)LeftNode.Eval() - (long)RightNode.Eval();
         }
     }
 
@@ -110,7 +110,7 @@ namespace sigma
 
         public override object Eval()
         {
-            return (decimal)LeftNode.Eval() * (decimal)RightNode.Eval();
+            return (long)LeftNode.Eval() * (long)RightNode.Eval();
         }
     }
 
@@ -132,7 +132,28 @@ namespace sigma
 
         public override object Eval()
         {
-            return (decimal)LeftNode.Eval() / (decimal)RightNode.Eval();
+            return (long)LeftNode.Eval() / (long)RightNode.Eval();
+        }
+    }
+
+    public class ASTBitwiseAND : IASTNode
+    {
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
+
+        public ASTBitwiseAND(IASTNode leftNode, IASTNode rightNode)
+        {
+            this.LeftNode = leftNode;
+            this.RightNode = rightNode;
+        }
+
+        public override string ToString()
+        {
+            return "(" + LeftNode.ToString() + " & " + RightNode.ToString() + ")";
+        }
+        public override object Eval()
+        {
+            return (long)this.LeftNode.Eval() & (long)this.RightNode.Eval();
         }
     }
 }
