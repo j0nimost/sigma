@@ -304,5 +304,18 @@ namespace sigma.tests
             lexer = new Lexer("drake   = \"CLB");
             Assert.Throws<InvalidOperationException>(() => lexer.Generate_Tokens()); 
         }
+
+        [Fact]
+        public void TestBitwiseOpAND()
+        {
+            lexer = new Lexer(" 7 & 2");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(2, (long)result.Eval());
+        }
     }
 }
