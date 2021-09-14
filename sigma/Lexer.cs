@@ -183,6 +183,21 @@ namespace sigma
                     }
                     //TODO: Add Logical LESS THAN
                 }
+                else if (curr_char == '>')
+                {
+                    Advance();
+                    if (curr_char == '>')
+                    {
+                        Token token = new Token
+                        {
+                            TokenType = TokenType.RSHIFT,
+                            TokenValue = null
+                        };
+                        tokens.Add(token);
+                        Advance();
+                    }
+                    //TODO: Add Logical GREATER THAN
+                }
                 else if (curr_char == '^')
                 {
                     Token token = new Token
