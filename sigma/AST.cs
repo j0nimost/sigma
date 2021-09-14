@@ -156,4 +156,25 @@ namespace sigma
             return (long)this.LeftNode.Eval() & (long)this.RightNode.Eval();
         }
     }
+
+    public class ASTBitwiseOR : IASTNode
+    {
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
+
+        public ASTBitwiseOR(IASTNode leftnode, IASTNode rightnode)
+        {
+            this.LeftNode = leftnode;
+            this.RightNode = rightnode;
+        }
+
+        public override string ToString()
+        {
+            return "(" + LeftNode.ToString() + " | " + RightNode.ToString() + ")";
+        }
+        public override object Eval()
+        {
+            return (long)this.LeftNode.Eval() | (long)this.RightNode.Eval();
+        }
+    }
 }

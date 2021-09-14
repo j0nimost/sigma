@@ -157,6 +157,17 @@ namespace sigma
                     tokens.Add(token);
                     Advance();
                 }
+                else if(curr_char == '|')
+                {
+                    //TODO: Add Logical OR
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.OR,
+                        TokenValue = null
+                    };
+                    tokens.Add(token);
+                    Advance();
+                }
                 else if(curr_char == '\0')
                 {
                     // 

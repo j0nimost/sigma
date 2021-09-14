@@ -8,7 +8,7 @@ namespace sigma
     {
         // Resolve the Lexer to Nodes
         private List<TokenType> ExpressionOps = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
-        private List<TokenType> TermOps = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY, TokenType.AND};
+        private List<TokenType> TermOps = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY, TokenType.AND, TokenType.OR};
         public static Dictionary<string, object> LocalAssignment = new Dictionary<string, object>();
         private List<Token> tokens;
         private int next = -1;
@@ -143,7 +143,12 @@ namespace sigma
                     IASTNode right = factor();
                     result = new ASTBitwiseAND(result, right);
                 }
-                
+                else if (curr_token.TokenType == TokenType.OR)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseOR(result, right);
+                }
             }
             return result;
         }
