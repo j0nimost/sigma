@@ -168,6 +168,16 @@ namespace sigma
                     tokens.Add(token);
                     Advance();
                 }
+                else if (curr_char == '^')
+                {
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.XOR,
+                        TokenValue = null
+                    };
+                    tokens.Add(token);
+                    Advance();
+                }
                 else if(curr_char == '\0')
                 {
                     // 
