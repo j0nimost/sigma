@@ -356,5 +356,18 @@ namespace sigma.tests
             Assert.NotNull(result);
             Assert.Equal(8, (long)result.Eval());
         }
+
+        [Fact]
+        public void TestBitwiseOpRShift()
+        {
+            lexer = new Lexer(" 9223372036854775807 >> 1");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(4611686018427387903, (long)result.Eval());
+        }
     }
 }
