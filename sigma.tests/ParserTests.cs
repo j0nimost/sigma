@@ -369,5 +369,31 @@ namespace sigma.tests
             Assert.NotNull(result);
             Assert.Equal(4611686018427387903, (long)result.Eval());
         }
+
+        [Fact]
+        public void TestIntegerOverflowForBitOps()
+        {
+            lexer = new Lexer(" 9223372036854775807 << 9223372036854775807");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Throws<OverflowException>(() => result.Eval());
+        }
+
+        [Fact]
+        public void TestInvalidCastForBitOps()
+        {
+            lexer = new Lexer(" 9223372036854775807 << \"CLB Sucks\"");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Throws<InvalidCastException>(() => result.Eval());
+        }
     }
 }
