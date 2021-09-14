@@ -57,6 +57,18 @@ Sigma >
     - [ ] Type Declaration
 
 
+### Getting Started
+You'll need:
+- DotNet Runtime >=`2.1`
+
+The Set up is pretty simple;
+
+- Clone this repository `git clone https://github.com/j0nimost/sigma.git`
+- Open the folder containing the `.csproj` file
+- From the Command Line/Terminal Run:
+    * `dotnet restore`
+    * `dotnet run`
+
 
 ### ⚠️UNDERCONSTRUCTION⚠️
 A lot of breaking changes
