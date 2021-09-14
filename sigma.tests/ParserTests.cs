@@ -18,7 +18,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(11, res);
         }
 
@@ -32,7 +32,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(80, res);
         }
 
@@ -46,7 +46,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(6, res);
         }
 
@@ -60,7 +60,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(98, res);
         }
 
@@ -74,7 +74,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(3, res);
         }
 
@@ -89,7 +89,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            Assert.Throws<DivideByZeroException>(() => (decimal)result.Eval());
+            Assert.Throws<DivideByZeroException>(() => (long)result.Eval());
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(3, res);
         }
 
@@ -116,7 +116,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(0, res);
         }
 
@@ -130,7 +130,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(5, res);
         }
 
@@ -144,7 +144,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(20, res);
         }
 
@@ -170,14 +170,14 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(8, res);
 
             // Test Variable Existence
             object variableAST = null;
             Assert.True(Parser.LocalAssignment.TryGetValue("p", out variableAST));
             Assert.NotNull(variableAST);
-            decimal variableEval = (decimal)variableAST;
+            long variableEval = (long)variableAST;
             Assert.Equal(8, variableEval);
 
         }
@@ -205,7 +205,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(0, res);
         }
 
@@ -222,7 +222,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(5, res);
 
             // Second Variable
@@ -233,7 +233,7 @@ namespace sigma.tests
             result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res_ = (decimal)result.Eval();
+            long res_ = (long)result.Eval();
             Assert.Equal(10, res_);
         }
 
@@ -248,7 +248,7 @@ namespace sigma.tests
             IASTNode result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res = (decimal)result.Eval();
+            long res = (long)result.Eval();
             Assert.Equal(5, res);
 
             // Second Variable
@@ -259,7 +259,7 @@ namespace sigma.tests
             result = parser.expression();
 
             Assert.NotNull(result);
-            decimal res_ = (decimal)result.Eval();
+            long res_ = (long)result.Eval();
             Assert.Equal(10, res_);
         }
 
@@ -303,6 +303,97 @@ namespace sigma.tests
         {
             lexer = new Lexer("drake   = \"CLB");
             Assert.Throws<InvalidOperationException>(() => lexer.Generate_Tokens()); 
+        }
+
+        [Fact]
+        public void TestBitwiseOpAND()
+        {
+            lexer = new Lexer(" 7 & 2");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(2, (long)result.Eval());
+        }
+
+        [Fact]
+        public void TestBitwiseOpOR()
+        {
+            lexer = new Lexer(" 13 | 2");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(15, (long)result.Eval());
+        }
+
+        [Fact]
+        public void TestBitwiseOpXOR()
+        {
+            lexer = new Lexer(" 15 ^ 2");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(13, (long)result.Eval());
+        }
+
+        [Fact]
+        public void TestBitwiseOpLShift()
+        {
+            lexer = new Lexer(" 2 << 2");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(8, (long)result.Eval());
+        }
+
+        [Fact]
+        public void TestBitwiseOpRShift()
+        {
+            lexer = new Lexer(" 9223372036854775807 >> 1");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(4611686018427387903, (long)result.Eval());
+        }
+
+        [Fact]
+        public void TestIntegerOverflowForBitOps()
+        {
+            lexer = new Lexer(" 9223372036854775807 << 9223372036854775807");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Throws<OverflowException>(() => result.Eval());
+        }
+
+        [Fact]
+        public void TestInvalidCastForBitOps()
+        {
+            lexer = new Lexer(" 9223372036854775807 << \"CLB Sucks\"");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Throws<InvalidCastException>(() => result.Eval());
         }
     }
 }

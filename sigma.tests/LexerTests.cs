@@ -52,5 +52,16 @@ namespace sigma.tests
             Assert.Equal(str_exp, l_str);
         }
 
+        [Fact]
+        public void TestBitwiseTypes()
+        {
+            string str_exp = "AND: OR: LSHIFT: RSHIFT: EOF: ";
+            lexer = new Lexer("& | << >>");
+            List<Token> tokens = lexer.Generate_Tokens();
+            string l_str = lexer.ToString();
+
+            Assert.NotEmpty(tokens);
+            Assert.Equal(str_exp, l_str);
+        }
     }
 }

@@ -129,7 +129,7 @@ namespace sigma
                 {
                     // Get the Character 
                     Token identifierToken = Generate_Variable();
-                    if (!String.IsNullOrEmpty(identifierToken.TokenValue))
+                    if (!String.IsNullOrEmpty((string)identifierToken.TokenValue))
                     {
                         tokens.Add(identifierToken);
                     }
@@ -142,6 +142,69 @@ namespace sigma
                         TokenValue = null
                     };
 
+                    tokens.Add(token);
+                    Advance();
+                }
+                else if(curr_char == '&')
+                {
+                    // AND bitwise operator
+                    // TODO: Add Logical AND
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.AND,
+                        TokenValue = null
+                    };
+                    tokens.Add(token);
+                    Advance();
+                }
+                else if(curr_char == '|')
+                {
+                    //TODO: Add Logical OR
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.OR,
+                        TokenValue = null
+                    };
+                    tokens.Add(token);
+                    Advance();
+                }
+                else if (curr_char == '<')
+                {
+                    Advance();
+                    if(curr_char == '<')
+                    {
+                        Token token = new Token
+                        {
+                            TokenType = TokenType.LSHIFT,
+                            TokenValue = null
+                        };
+                        tokens.Add(token);
+                        Advance();
+                    }
+                    //TODO: Add Logical LESS THAN
+                }
+                else if (curr_char == '>')
+                {
+                    Advance();
+                    if (curr_char == '>')
+                    {
+                        Token token = new Token
+                        {
+                            TokenType = TokenType.RSHIFT,
+                            TokenValue = null
+                        };
+                        tokens.Add(token);
+                        Advance();
+                    }
+                    //TODO: Add Logical GREATER THAN
+                }
+                else if (curr_char == '^')
+                {
+                    Token token = new Token
+                    {
+                        TokenType = TokenType.XOR,
+                        TokenValue = null
+                    };
                     tokens.Add(token);
                     Advance();
                 }
@@ -208,12 +271,11 @@ namespace sigma
                 return null;
             }
 
-            // use Decimal since it has 128 bit
-            // TODO: change to BigInteger
+            // Changed to long to support bitwise operations
             return new Token
             {
                 TokenType = TokenType.NUMBER,
-                TokenValue = Convert.ToDecimal(number)
+                TokenValue = Convert.ToInt64(number)
             };
 
         }
@@ -280,7 +342,7 @@ namespace sigma
                 if (tokens[i].TokenType == TokenType.IDENTIFIER) // only work with Identifiers
                 {
                     object assignment = null;
-                    if (Parser.LocalAssignment.TryGetValue(tokens[i].TokenValue, out assignment))
+                    if (Parser.LocalAssignment.TryGetValue((string)tokens[i].TokenValue, out assignment))
                     {
                         if(tokenTypes.Contains(TokenType.EQ))
                         {
@@ -295,8 +357,8 @@ namespace sigma
                         }
                         else
                         {
-                            decimal val = 0;
-                            if(Decimal.TryParse(assignment.ToString(), out val))
+                            long val = 0;
+                            if(Int64.TryParse(assignment.ToString(), out val))
                             {
                                 tokens[i] = new Token
                                 {
