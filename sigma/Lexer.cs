@@ -168,6 +168,21 @@ namespace sigma
                     tokens.Add(token);
                     Advance();
                 }
+                else if (curr_char == '<')
+                {
+                    Advance();
+                    if(curr_char == '<')
+                    {
+                        Token token = new Token
+                        {
+                            TokenType = TokenType.LSHIFT,
+                            TokenValue = null
+                        };
+                        tokens.Add(token);
+                        Advance();
+                    }
+                    //TODO: Add Logical LESS THAN
+                }
                 else if (curr_char == '^')
                 {
                     Token token = new Token

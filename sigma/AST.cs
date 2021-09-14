@@ -198,4 +198,38 @@ namespace sigma
             return (long)this.LeftNode.Eval() ^ (long)this.RightNode.Eval();
         }
     }
+
+    public class ASTBitwiseLShift : IASTNode
+    {
+        public readonly IASTNode LeftNode;
+        public readonly IASTNode RightNode;
+        public ASTBitwiseLShift(IASTNode leftNode, IASTNode rightNode)
+        {
+            this.LeftNode = leftNode;
+            this.RightNode = rightNode;
+        }
+
+        public override string ToString()
+        {
+            return "(" + LeftNode.ToString() + " << " + RightNode.ToString() + ")";
+        }
+        public override object Eval()
+        {
+            // convert right node to Int32
+            try
+            {
+                Int64 rightLongVal = (long)this.RightNode.Eval();
+                Int32 rightNodeVal = Convert.ToInt32(rightLongVal);
+                return (long)this.LeftNode.Eval() << rightNodeVal;
+            }
+            catch (OverflowException ex)// Could be an Overflow
+            {
+                throw ex;
+            }
+            catch (InvalidCastException ex)// Could be a Cast exception
+            {
+                throw ex;
+            }
+        }
+    }
 }
