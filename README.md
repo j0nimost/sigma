@@ -16,6 +16,13 @@ Sigma >
      - [x] Division
      - [x] Bracket Operations
 
+* Bitwise Operators
+     - [x] OR 
+     - [x] AND
+     - [x] XOR
+     - [x] Left Shift
+     - [x] Right Shift
+
 * Data Types
      - [x] Floats, Ints & UInts(8-> 64)
      - [x] Strings
@@ -29,11 +36,20 @@ Sigma >
     - [x] Local Variables
     - [ ] Global Variables
 
+* Logical Operators
+     - [ ] OR 
+     - [ ] AND
+     - [ ] Less Than
+     - [ ] Greater Than
+     - [ ] Less Than Or Equal To
+     - [ ] Greater Than or Equal To
+
 * Statements
     - [ ] Print
     - [ ] Return
     - [ ] IF statements
     - [ ] For Loops
+
 * Functions
     - [ ] Functions
     - [ ] Arrow Functions

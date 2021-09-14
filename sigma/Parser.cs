@@ -7,8 +7,8 @@ namespace sigma
     public class Parser
     {
         // Resolve the Lexer to Nodes
-        private List<TokenType> AddMinus = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
-        private List<TokenType> DivMultiply = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY};
+        private List<TokenType> ExpressionOps = new List<TokenType> { TokenType.PLUS, TokenType.MINUS };
+        private List<TokenType> TermOps = new List<TokenType> { TokenType.DIVIDE, TokenType.MULTIPLY, TokenType.AND, TokenType.OR, TokenType.XOR, TokenType.LSHIFT, TokenType.RSHIFT};
         public static Dictionary<string, object> LocalAssignment = new Dictionary<string, object>();
         private List<Token> tokens;
         private int next = -1;
@@ -33,7 +33,7 @@ namespace sigma
         {
             if (curr_token.TokenType == TokenType.IDENTIFIER)
             {
-                string variable = curr_token.TokenValue;
+                string variable = (string)curr_token.TokenValue;
                 // validate EQ
                 Advance();
                 if (curr_token.TokenType == TokenType.EOF)
@@ -71,7 +71,7 @@ namespace sigma
                 if(resultTree == null)
                 {
                     resultTree = term();
-                    while (curr_token.TokenType != TokenType.EOF && resultTree != null && AddMinus.Contains(curr_token.TokenType))
+                    while (curr_token.TokenType != TokenType.EOF && resultTree != null && ExpressionOps.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
@@ -92,7 +92,7 @@ namespace sigma
                 {
                     // During Recursion avoid overwriting value of resulttree
                     IASTNode tempResult = term();
-                    while (curr_token.TokenType != TokenType.EOF && tempResult != null && AddMinus.Contains(curr_token.TokenType))
+                    while (curr_token.TokenType != TokenType.EOF && tempResult != null && ExpressionOps.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
@@ -122,7 +122,7 @@ namespace sigma
         {
             IASTNode result = factor();
             //
-            while (curr_token.TokenType != TokenType.EOF && DivMultiply.Contains(curr_token.TokenType))
+            while (curr_token.TokenType != TokenType.EOF && TermOps.Contains(curr_token.TokenType))
             {
                 if (curr_token.TokenType == TokenType.MULTIPLY)
                 {
@@ -137,7 +137,36 @@ namespace sigma
                     IASTNode right = factor();
                     result = new ASTDivide(result, right);
                 }
-                
+                else if(curr_token.TokenType == TokenType.AND)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseAND(result, right);
+                }
+                else if (curr_token.TokenType == TokenType.OR)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseOR(result, right);
+                }
+                else if (curr_token.TokenType == TokenType.XOR)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseXOR(result, right);
+                }
+                else if (curr_token.TokenType == TokenType.LSHIFT)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseLShift(result, right);
+                }
+                else if (curr_token.TokenType == TokenType.RSHIFT)
+                {
+                    Advance();
+                    IASTNode right = factor();
+                    result = new ASTBitwiseRShift(result, right);
+                }
             }
             return result;
         }
@@ -162,11 +191,11 @@ namespace sigma
 
             if (curr_token.TokenType == TokenType.NUMBER)
             {
-                result = new ASTNumber(curr_token.TokenValue);                
+                result = new ASTNumber((long)curr_token.TokenValue);                
             }
             else if (curr_token.TokenType == TokenType.STRING)
             {
-                result = new ASTString(curr_token.TokenValue);
+                result = new ASTString((string)curr_token.TokenValue);
             }
             Advance();
             return result;

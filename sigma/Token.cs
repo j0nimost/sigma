@@ -17,12 +17,21 @@ namespace sigma
         LPAREN,
         IDENTIFIER,
         EQ,
+
+        /*BITWISE OPERATORS*/
+        AND, // &
+        OR, // |
+        XOR, // ^
+        LSHIFT, // <<
+        RSHIFT, // >>
+
+
         EOF
     }
     public class Token
     {
         public TokenType TokenType { get; set; }
-        public dynamic TokenValue { get; set; }
+        public object TokenValue { get; set; } // Changed from Dynamic Since it Fails for Long
 
         public override string ToString()
         {
