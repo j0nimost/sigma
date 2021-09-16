@@ -63,5 +63,17 @@ namespace sigma.tests
             Assert.NotEmpty(tokens);
             Assert.Equal(str_exp, l_str);
         }
+
+        [Fact]
+        public void TestBooleanPredefinedIdentifers()
+        {
+            string str_exp = "IDENTIFIER:p EQ: IDENTIFIER:false EOF: ";
+            lexer = new Lexer("p      =      false");
+            List<Token> tokens = lexer.Generate_Tokens();
+            string str_act = lexer.ToString();
+
+            Assert.NotEmpty(tokens);
+            Assert.Equal(str_exp, str_act);
+        }
     }
 }
