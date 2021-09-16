@@ -29,7 +29,7 @@ namespace sigma
             }
         }
         
-        public IASTNode expression()
+        public IASTNode Expression()
         {
             if (curr_token.TokenType == TokenType.IDENTIFIER)
             {
@@ -49,7 +49,7 @@ namespace sigma
                     throw new InvalidOperationException("Missing Assignment Type After '=");
                 }
                 //Recurse on Expression to get the expression
-                resultTree = expression();
+                resultTree = Expression();
                 // Store In Dictionary
                 try
                 {
@@ -70,20 +70,20 @@ namespace sigma
             {
                 if(resultTree == null)
                 {
-                    resultTree = term();
+                    resultTree = Term();
                     while (curr_token.TokenType != TokenType.EOF && resultTree != null && ExpressionOps.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
                             Advance();
-                            IASTNode right = term();
+                            IASTNode right = Term();
                             resultTree = new ASTPlus(resultTree, right);
 
                         }
                         else if (curr_token.TokenType == TokenType.MINUS)
                         {
                             Advance();
-                            IASTNode right = term();
+                            IASTNode right = Term();
                             resultTree = new ASTMinus(resultTree, right);
                         }
                     }
@@ -91,20 +91,20 @@ namespace sigma
                 else
                 {
                     // During Recursion avoid overwriting value of resulttree
-                    IASTNode tempResult = term();
+                    IASTNode tempResult = Term();
                     while (curr_token.TokenType != TokenType.EOF && tempResult != null && ExpressionOps.Contains(curr_token.TokenType))
                     {
                         if (curr_token.TokenType == TokenType.PLUS)
                         {
                             Advance();
-                            IASTNode right = term();
+                            IASTNode right = Term();
                             resultTree = new ASTPlus(tempResult, right);
 
                         }
                         else if (curr_token.TokenType == TokenType.MINUS)
                         {
                             Advance();
-                            IASTNode right = term();
+                            IASTNode right = Term();
                             resultTree = new ASTMinus(tempResult, right);
                         }
                     }
@@ -118,65 +118,65 @@ namespace sigma
             return resultTree;
         }
 
-        public IASTNode term()
+        public IASTNode Term()
         {
-            IASTNode result = factor();
+            IASTNode result = Factor();
             //
             while (curr_token.TokenType != TokenType.EOF && TermOps.Contains(curr_token.TokenType))
             {
                 if (curr_token.TokenType == TokenType.MULTIPLY)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTMultiply(result, right);
 
                 }
                 else if(curr_token.TokenType == TokenType.DIVIDE)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTDivide(result, right);
                 }
                 else if(curr_token.TokenType == TokenType.AND)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTBitwiseAND(result, right);
                 }
                 else if (curr_token.TokenType == TokenType.OR)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTBitwiseOR(result, right);
                 }
                 else if (curr_token.TokenType == TokenType.XOR)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTBitwiseXOR(result, right);
                 }
                 else if (curr_token.TokenType == TokenType.LSHIFT)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTBitwiseLShift(result, right);
                 }
                 else if (curr_token.TokenType == TokenType.RSHIFT)
                 {
                     Advance();
-                    IASTNode right = factor();
+                    IASTNode right = Factor();
                     result = new ASTBitwiseRShift(result, right);
                 }
             }
             return result;
         }
-        public IASTNode factor()
+        public IASTNode Factor()
         {
             IASTNode result = null;
             if (curr_token.TokenType == TokenType.LPAREN)
             {
                 Advance();
-                result = expression();// recursion to get next input
+                result = Expression();// recursion to get next input
                 
                 if (curr_token.TokenType == TokenType.EOF)
                 {
@@ -201,5 +201,6 @@ namespace sigma
             return result;
 
         }
+
     }
 }

@@ -15,7 +15,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -29,7 +29,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -43,7 +43,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -57,7 +57,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -71,7 +71,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -86,7 +86,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             Assert.Throws<DivideByZeroException>(() => (long)result.Eval());
@@ -99,7 +99,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -113,7 +113,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -127,7 +127,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -141,7 +141,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -157,7 +157,7 @@ namespace sigma.tests
             Parser parser = new Parser(tokens);
 
 
-            Assert.Throws<FormatException>(() => parser.expression());
+            Assert.Throws<FormatException>(() => parser.Expression());
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -191,7 +191,7 @@ namespace sigma.tests
             Parser parser = null;
             parser = new Parser(tokens);
 
-            Assert.Throws<InvalidOperationException>(() => parser.expression());
+            Assert.Throws<InvalidOperationException>(() => parser.Expression());
 
         }
 
@@ -202,7 +202,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -219,7 +219,7 @@ namespace sigma.tests
             Parser parser = null;
             parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -230,7 +230,7 @@ namespace sigma.tests
             tokens = lexer.Generate_Tokens();
             parser = new Parser(tokens);
 
-            result = parser.expression();
+            result = parser.Expression();
 
             Assert.NotNull(result);
             long res_ = (long)result.Eval();
@@ -245,7 +245,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
 
             Assert.NotNull(result);
             long res = (long)result.Eval();
@@ -256,7 +256,7 @@ namespace sigma.tests
             tokens = lexer.Generate_Tokens();
             parser = new Parser(tokens);
 
-            result = parser.expression();
+            result = parser.Expression();
 
             Assert.NotNull(result);
             long res_ = (long)result.Eval();
@@ -270,7 +270,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal("Donda", result.Eval());
@@ -284,7 +284,7 @@ namespace sigma.tests
             Assert.NotEmpty(tokens);
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotNull(result);
             Assert.Equal("Donda", result.Eval());
 
@@ -294,7 +294,7 @@ namespace sigma.tests
             Assert.NotEmpty(tokens);
             parser = new Parser(tokens);
 
-            result = parser.expression();
+            result = parser.Expression();
             Assert.Equal("Donda", result.Eval());
         }
 
@@ -312,7 +312,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal(2, (long)result.Eval());
@@ -325,7 +325,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal(15, (long)result.Eval());
@@ -338,7 +338,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal(13, (long)result.Eval());
@@ -351,7 +351,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal(8, (long)result.Eval());
@@ -364,7 +364,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Equal(4611686018427387903, (long)result.Eval());
@@ -377,7 +377,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Throws<OverflowException>(() => result.Eval());
@@ -390,7 +390,7 @@ namespace sigma.tests
             List<Token> tokens = lexer.Generate_Tokens();
             Parser parser = new Parser(tokens);
 
-            IASTNode result = parser.expression();
+            IASTNode result = parser.Expression();
             Assert.NotEmpty(tokens);
             Assert.NotNull(result);
             Assert.Throws<InvalidCastException>(() => result.Eval());
