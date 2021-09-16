@@ -26,7 +26,7 @@ Sigma >
 * Data Types
      - [x] Floats, Ints & UInts(8-> 64)
      - [x] Strings
-     - [ ] Boolean
+     - [x] Boolean
      - [ ] Char
      - [ ] Byte 
      - [ ] Lists
