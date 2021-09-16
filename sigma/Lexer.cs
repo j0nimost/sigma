@@ -227,7 +227,6 @@ namespace sigma
                 
             }
 
-            
 
             Generate_VariableTokenValues(tokens); // IF ANY
             return tokens;
@@ -357,19 +356,29 @@ namespace sigma
                         }
                         else
                         {
-                            long val = 0;
-                            if(Int64.TryParse(assignment.ToString(), out val))
+                            
+                            if(assignment is string)
                             {
                                 tokens[i] = new Token
                                 {
-                                    TokenType = TokenType.NUMBER,
-                                    TokenValue = val
+                                    TokenType = TokenType.STRING,
+                                    TokenValue = assignment
+                                };
+
+                            }
+                            else if(assignment is bool)
+                            {
+                                tokens[i] = new Token
+                                {
+                                    TokenType = TokenType.IDENTIFIER,
+                                    TokenValue = assignment
                                 };
                             }
                             else {
+                                
                                 tokens[i] = new Token
                                 {
-                                    TokenType = TokenType.STRING,
+                                    TokenType = TokenType.NUMBER,
                                     TokenValue = assignment
                                 };
                             }

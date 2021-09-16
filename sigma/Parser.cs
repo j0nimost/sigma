@@ -33,32 +33,33 @@ namespace sigma
         {
             if (curr_token.TokenType == TokenType.IDENTIFIER)
             {
-                string variable = (string)curr_token.TokenValue;
-                // validate EQ
-                Advance();
-                if (curr_token.TokenType == TokenType.EOF)
+                string variable = String.Empty;
+                if (curr_token.TokenValue is string)
                 {
-                    throw new InvalidOperationException("Missing Assignment '=' After Identifier");
+                    variable = (string)curr_token.TokenValue;
+
+                }
+                else
+                {
+                    return new ASTIdentifier(null, curr_token.TokenValue);
                 }
 
-                //Advance
-                Advance();
-                // Check for Expression
-                if (curr_token.TokenType == TokenType.EOF)
-                {
-                    throw new InvalidOperationException("Missing Assignment Type After '=");
-                }
-                //Recurse on Expression to get the expression
-                resultTree = Expression();
+                resultTree = ParseIdentifiers(variable);
                 // Store In Dictionary
                 try
                 {
-                    bool isAdded =LocalAssignment.TryAdd(variable, resultTree.Eval());
+                    object identifierValue = resultTree.Eval();
 
-                    if (!isAdded)
+                    if (!IsPredefinedIdentifier(variable)) // Ensure we don't add Predefined Variables
                     {
-                        LocalAssignment[variable] = resultTree.Eval(); // Update
+                        bool isAdded = LocalAssignment.TryAdd(variable, identifierValue);
+
+                        if (!isAdded)
+                        {
+                            LocalAssignment[variable] = identifierValue; // Update
+                        }
                     }
+
                 }
                 catch (Exception)
                 {
@@ -202,5 +203,69 @@ namespace sigma
 
         }
 
+        public IASTNode ParseIdentifiers(string identifier)
+        {
+            // Check identifier if its a predefined Identifier i.e
+            // Bool, Char, Byte
+            // Else Make a variable declaration
+            IASTNode identifierNode = null;
+            bool bolValue;
+            if (Boolean.TryParse(identifier, out bolValue) && identifierNode == null)
+            {
+                identifierNode = new ASTIdentifier("Boolean", bolValue);
+                ValidatePredefinedVariables(bolValue);
+            }
+            else if (identifierNode == null)
+            {
+                Advance();
+                if (curr_token.TokenType == TokenType.EOF)
+                {
+                    throw new InvalidOperationException("Missing Assignment '=' After Identifier");
+                }
+
+                //Advance
+                Advance();
+                // Check for Expression
+                if (curr_token.TokenType == TokenType.EOF)
+                {
+                    throw new InvalidOperationException("Missing Assignment Type After '=");
+                }
+                //Recurse on Expression to get the expression
+                IASTNode expression = Expression();
+
+                //Pass back to the identifier
+                identifierNode = new ASTIdentifier(identifier, expression.Eval());
+
+                Advance();
+            }
+            else
+            {
+                // Too many arguments are being passed
+                throw new OverflowException($"Too Many Assignment for the variable: {identifier}");
+            }
+            
+            return identifierNode; // return it
+        }
+
+        public void ValidatePredefinedVariables(object obj)
+        {
+            // Validate there is no attempt to assignvalue to the
+            Advance();
+
+            if (curr_token.TokenType == TokenType.EQ)
+            {
+                throw new InvalidOperationException($"You cannot assign value to a :{obj.GetType()}");
+            }
+        }
+
+        public bool IsPredefinedIdentifier(string identifierName)
+        {
+            bool IsPredefined = false;//Boolean.TryParse(identifierName, out _);
+            if(Boolean.TryParse(identifierName, out _))
+            {
+                IsPredefined = true;
+            }
+            return IsPredefined;
+        }
     }
 }
