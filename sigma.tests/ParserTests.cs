@@ -395,5 +395,53 @@ namespace sigma.tests
             Assert.NotNull(result);
             Assert.Throws<InvalidCastException>(() => result.Eval());
         }
+
+        [Fact]
+        public void TestBooleanTypeAssingment()
+        {
+            lexer = new Lexer("p=true");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.Expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(true, result.Eval());
+
+        }
+
+        [Fact]
+        public void TestBooleanTypeReAssingment()
+        {
+            lexer = new Lexer("p=true");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            IASTNode result = parser.Expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(true, result.Eval());
+
+            lexer = new Lexer("p=False");
+            tokens = lexer.Generate_Tokens();
+            parser = new Parser(tokens);
+
+            result = parser.Expression();
+            Assert.NotEmpty(tokens);
+            Assert.NotNull(result);
+            Assert.Equal(false, result.Eval());
+
+        }
+
+        [Fact]
+        public void TestBooleanAssingmentError()
+        {
+            lexer = new Lexer("true=true");
+            List<Token> tokens = lexer.Generate_Tokens();
+            Parser parser = new Parser(tokens);
+
+            Assert.NotEmpty(tokens);
+            Assert.Throws<InvalidOperationException>(() => parser.Expression());
+        }
     }
 }
