@@ -266,4 +266,25 @@ namespace sigma
             }
         }
     }
+
+    public class ASTIdentifier : IASTNode
+    {
+        private readonly object Node;
+        private readonly string Name;
+
+        public ASTIdentifier(string name, object node)
+        {
+            this.Name = name;
+            this.Node = node;
+        }
+
+        public override string ToString()
+        {
+            return "( " + this.Name + ": " + this.Node + " )";
+        }
+        public override object Eval()
+        {
+            return this.Node;
+        }
+    }
 }

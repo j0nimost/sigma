@@ -17,12 +17,9 @@ namespace sigma
                 {
                     lexer = new Lexer(text);
                     List<Token> tokens = lexer.Generate_Tokens();
-                    //Console.WriteLine(lexer.ToString());
 
-                    // 
                     Parser parser = new Parser(tokens);
-                    IASTNode ast = parser.expression();
-                    //Console.WriteLine(ast.ToString());
+                    IASTNode ast = parser.Expression();
                     Console.Write(ast.Eval());
                 }
                 catch (Exception ex)

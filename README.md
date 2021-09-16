@@ -26,7 +26,7 @@ Sigma >
 * Data Types
      - [x] Floats, Ints & UInts(8-> 64)
      - [x] Strings
-     - [ ] Boolean
+     - [x] Boolean
      - [ ] Char
      - [ ] Byte 
      - [ ] Lists
@@ -57,7 +57,8 @@ Sigma >
     - [ ] Type Declaration
 
 
-### Getting Started
+
+## Getting Started
 You'll need:
 - DotNet Runtime >=`2.1`
 
@@ -73,7 +74,7 @@ The Set up is pretty simple;
 ### ⚠️UNDERCONSTRUCTION⚠️
 A lot of breaking changes
 
-### Author
+## Author
 John Nyingi
 
 ### Contributions
