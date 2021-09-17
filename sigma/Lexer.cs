@@ -50,7 +50,6 @@ namespace sigma
                 {
                     Token strToken = Generate_String();
                     tokens.Add(strToken);
-                    Advance();
                 }
                 else if(curr_char == '.' || NUMBERS.Contains(curr_char))
                 {
@@ -220,6 +219,20 @@ namespace sigma
                     tokens.Add(eof);
                     break;
                 }
+                else if(curr_char == '[')
+                {
+                    Advance();
+
+                    //Add LBRACK
+                    Token lbrack = new Token
+                    {
+                        TokenType = TokenType.LBRACKET,
+                        TokenValue = null
+                    };
+                    tokens.Add(lbrack);
+                    Generate_Slice(); // Generate Tokens
+                    Advance();
+                }
                 else
                 {
                     throw new NotSupportedException($"Character: {curr_char} is unknown");
@@ -311,7 +324,7 @@ namespace sigma
             {
                 throw new InvalidOperationException("Invalid string format");
             }
-
+            Advance();
             return new Token
             {
                 TokenType = TokenType.STRING,
@@ -389,6 +402,77 @@ namespace sigma
             }
             // Pass to the Parser
             return tokens;
+        }
+
+        public void Generate_Slice()
+        {
+            Token defaultToken = null; // Set the default TokenType
+
+            // get the first token and stick to that
+            if (curr_char == '.' || NUMBERS.Contains(curr_char))
+            {
+                Token numToken = Generate_Number();
+                if(numToken != null)
+                {
+                    defaultToken = numToken;
+                }
+
+            }
+            else if(curr_char == '\"')
+            {
+                Token strToken = Generate_String();
+                if (strToken != null)
+                {
+                    defaultToken = strToken;
+                }
+            }
+
+            while (curr_char != ']' && curr_char != '\0')
+            {
+                
+                Advance();
+                if (WHITESPACE.Contains(curr_char))
+                {
+                    continue;
+                }
+                Token token = null;
+
+                if(defaultToken.TokenType == TokenType.NUMBER)
+                {
+                    Token numToken = Generate_Number();
+                    if (numToken != null)
+                    {
+                        token = numToken;
+                    }
+                }
+                else if(defaultToken.TokenType == TokenType.STRING)
+                {
+                    Token strToken = Generate_String();
+                    if (strToken != null)
+                    {
+                        token = strToken;
+                    }
+                }
+                // Add it
+                if(token != null)
+                {
+                    tokens.Add(token);
+                }
+            }
+            //Validate last Bracket
+            if(curr_char != ']')
+            {
+                throw new InvalidOperationException("Missing ]");
+            }
+            else
+            {
+                Token rbrack = new Token
+                {
+                    TokenType = TokenType.RBRACKET,
+                    TokenValue = null
+                };
+                tokens.Add(rbrack);
+            }
         }
 
         public override string ToString()
