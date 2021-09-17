@@ -75,5 +75,29 @@ namespace sigma.tests
             Assert.NotEmpty(tokens);
             Assert.Equal(str_exp, str_act);
         }
+
+        [Fact]
+        public void TestNumberSlice()
+        {
+            string str_exp = "LBRACKET: NUMBER:3 NUMBER:6 NUMBER:67 NUMBER:7 RBRACKET: EOF: ";
+            lexer = new Lexer("[5,3,6,67,7]");
+            List<Token> tokens = lexer.Generate_Tokens();
+            string str_act = lexer.ToString();
+
+            Assert.NotEmpty(tokens);
+            Assert.Equal(str_exp, str_act);
+        }
+
+        [Fact]
+        public void TestStringSlice()
+        {
+            string str_exp = "LBRACKET: STRING:Purple tint STRING:three percent STRING:two FNs RBRACKET: EOF: ";
+            lexer = new Lexer("[\"Cartier\",\"Purple tint\", \"three percent\", \"two FNs\"]");
+            List<Token> tokens = lexer.Generate_Tokens();
+            string str_act = lexer.ToString();
+
+            Assert.NotEmpty(tokens);
+            Assert.Equal(str_exp, str_act);
+        }
     }
 }
