@@ -25,7 +25,9 @@ namespace sigma
         LSHIFT, // <<
         RSHIFT, // >>
 
-
+        LBRACKET, // [
+        RBRACKET, // ]
+        COMMA, // ,
         EOF
     }
     public class Token
